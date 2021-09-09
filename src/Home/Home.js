@@ -2,7 +2,8 @@ import {React, useState, useEffect} from 'react';
 import UserPool from '../UserPool';
 import Button from '@material-ui/core/Button';
 import {useHistory, useLocation } from 'react-router-dom';
-import Header from '../Components/Header'
+import Header from '../Components/Header';
+import Sidebar from '../Components/Sidebar';
 
 const Home = () => {
 
@@ -34,26 +35,20 @@ const Home = () => {
                 setLoggedIn(location.state.loggedIn)
             }
         }
-        // new Promise((resolve, reject) => {
         const user = UserPool.getCurrentUser();
         if (user) {
             user.getSession((err, session) => {
             if (err) {
                 console.error("Errow when getting session for user")
-                // reject();
             } else {
                 console.log("Found User")
                 setLoggedIn(true);
-
-                // resolve(session);
             }
             });
         } else {
             console.log("Error no user found")
-            // reject();
             setLoggedIn(false);
         }
-        // });
 
 
     }, [setLoggedIn]);
