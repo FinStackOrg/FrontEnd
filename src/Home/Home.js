@@ -68,21 +68,18 @@ const Home = () => {
             console.log("Error no user found")
             setLoggedIn(false);
         }
-        // console.log("logged in Value: " + loggedIn)
         
 
     }, [loggedIn, setLoggedIn]);
 
     const list = (data) => (
-        <List>
-            {data.map((account) => (
-                <ListItem button key={account.name}>
-                    <SimpleCard title={account.name} total={account.account_total} pctChange={account.total_pct_change}/>
-                </ListItem>
-            ))}
-        </List>
+        // <List>
+            data.map((account) => (
+                // <ListItem button key={account.name}>
+                    <SimpleCard title={account.name} total={account.account_total} pctChange={account.total_pct_change} assets={account.assets}/>
+                // </ListItem>
+            ))
         
-
     );
     return (
         <div>
