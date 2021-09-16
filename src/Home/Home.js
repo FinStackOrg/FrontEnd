@@ -7,12 +7,15 @@ import Sidebar from '../Components/Sidebar';
 import SimpleCard from '../Components/Card';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import { LensTwoTone } from '@material-ui/icons';
+import { Typography } from '@material-ui/core';
 
 const Home = () => {
 
     const [loggedIn, setLoggedIn] = useState(false);
     const [data, setData] = useState([]);
-    const [hasData, setHasData] = useState(false)
+    const [hasData, setHasData] = useState(false);
+    const [firstName, setFirstName] = useState('');
     let history = useHistory();
     let location = useLocation();
     console.log("Started here")
@@ -23,7 +26,7 @@ const Home = () => {
         if (user) {
             user.getSession((err, session) => {
                 if (err) {
-                    console.error("Errow when getting session for user")
+                    console.error("Error when getting session for user")
                 } else {
                     console.log("Found User")
                     setLoggedIn(true);
@@ -32,6 +35,21 @@ const Home = () => {
                     method: 'GET',
                     redirect: 'follow'
                     };
+                    user.getUserAttributes((err1, result) => {
+                        if (err1) {
+                            console.log("erroed out");
+                        } else {
+                            console.log("GEt user attributes")
+                            for (var i = 0; i < result.length; i++) {
+                                console.log(
+                                    'attribute ' + result[i].getName() + ' has value ' + result[i].getValue()
+                                );
+                                if (result[i].getName() == "given_name") {
+                                    setFirstName(result[i].getValue());
+                                }
+                            }
+                        }
+                    });
                     var username = user.getUsername()
                     var homePageUrl = "https://ji1g9w5p36.execute-api.us-west-1.amazonaws.com/test/homePage/" + username
                     console.log("Url to reach: " + homePageUrl)
@@ -84,10 +102,11 @@ const Home = () => {
     return (
         <div>
             <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
-            <p>Hello this is Home Page</p>
             {loggedIn ? (
                 <div>
-                    You are logged in.
+                    <Typography variant="h2" gutterBottom>
+                        Hello {firstName}
+                    </Typography>
                     { hasData && 
                     list(data)
                     }
@@ -95,7 +114,7 @@ const Home = () => {
                 </div>
                 )   :
                 <div>
-                    'Please Log In or Sign Up'
+                    'Hello Please Log In or Sign Up'
                 </div>
             }
         
