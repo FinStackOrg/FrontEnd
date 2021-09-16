@@ -20,7 +20,6 @@ const SignUp = () => {
   const [fName, setfName] = useState({Name: 'given_name', Value: ''});
   const [lName, setlName] = useState({Name: 'family_name', Value: ''});
   const [bday, setBday] = useState({Name: 'birthdate', Value: new Date()});
-//   const [selectedDate, setSelectedDate] = useState(new Date('2014-08-18T21:11:54'));
 
   const handleDateChange = (date) => {
     var strDate = Moment(date).format('MM-DD-YYYY');
@@ -107,6 +106,7 @@ const SignUp = () => {
                     variant="outlined"
                     value={password}
                     onChange={event => setPassword(event.target.value)}
+                    inputProps={{ pattern: "^(?=.*\d)(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[A-Z]).{8,32}$" }}
                 />
                 <Button type='submit' variant="contained" color="primary">
                     Sign Up

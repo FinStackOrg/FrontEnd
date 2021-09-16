@@ -48,8 +48,8 @@ const Verify = () => {
                             var requestOptions = {
                                 method: 'POST',
                                 redirect: 'follow'
-                              };
-                            var url = "https://ji1g9w5p36.execute-api.us-west-1.amazonaws.com/test/signup?username=" + username
+                            }; 
+                            var url = "https://ji1g9w5p36.execute-api.us-west-1.amazonaws.com/test/signup?username=" + cognitoUser.getUsername()
                             fetch(url, requestOptions)
                             .then(response => response.text())
                             .then(resultConfirmUser => console.log(resultConfirmUser))
