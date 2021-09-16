@@ -9,8 +9,9 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import Button from '@material-ui/core/Button';
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory, Link, useLocation } from 'react-router-dom';
 import UserPool from '../UserPool';
+import Sidebar from './Sidebar';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,6 +31,7 @@ function Header({loggedIn, setLoggedIn}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   let history = useHistory();
+  let location = useLocation();
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -59,42 +61,32 @@ function Header({loggedIn, setLoggedIn}) {
     if (user) {
         user.signOut();
         setLoggedIn(false);
+        if (location.state != undefined) {
+          console.log("Number of keys in locaiton state: " + Object.keys(location.state));
+          delete location.state.loggedIn;
+        }
+        console.log("Logging out");
     }
   };
   console.log(loggedIn)
+  // const Sidebar
 
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" 
+          {/* <IconButton edge="start" className={classes.menuButton} color="inherit" 
                       aria-label="menu" 
                       aria-controls="menu-appbar-1"
                       aria-haspopup="true"
-                      onClick={handleMenu}
-                      >
-            <MenuIcon/>
-          </IconButton>
-          <Menu
-                id="menu-appbar-1"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={open}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
-          </Menu>
+                      // onClick={handleMenu}
+                      > */}
+            {/* <Sidebar/> */}
+              {/* <MenuIcon></MenuIcon> */}
+          {/* </IconButton> */}
+          <Sidebar/>
           <Typography variant="h6" className={classes.title}>
-            <Link to="/" style={linkStyle}>AssetBoard</Link>
+            <Link to="/" style={linkStyle}>FinStack</Link>
           </Typography>
 
           {loggedIn ? (
