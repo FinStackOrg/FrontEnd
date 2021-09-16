@@ -39,6 +39,9 @@ export default function Sidebar() {
     history.push("/Robinhood")
   }
 
+  const coinbaseProLink = () => {
+    history.push("/CoinbasePro")
+  }
   const list = () => (
     <div
       className={clsx(classes.list, [])}
@@ -46,9 +49,22 @@ export default function Sidebar() {
       onClick={toggleDrawer(false)}
       onKeyDown={toggleDrawer(false)}
     >
-      <List>
+      {/* <List>
         <ListItem button key={'Link Account'} onClick={robinhoodLink}>
             <ListItemText primary={'Link Account'} />
+        </ListItem>
+      </List> */}
+      <List>
+        {/* {['Link Robinhood', 'Link CoinbasePro'].map((text, index) => (
+          <ListItem button key={text} onClick={}>
+            <ListItemText primary={text} />
+          </ListItem>
+        ))} */}
+        <ListItem button key={'Link Robinhood'} onClick={robinhoodLink}>
+            <ListItemText primary={'Link Robinhood'} />
+        </ListItem>
+        <ListItem button key={'Link CoinbasePro'} onClick={coinbaseProLink}>
+            <ListItemText primary={'Link CoinbasePro'} />
         </ListItem>
       </List>
     </div>

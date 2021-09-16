@@ -9,7 +9,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import Button from '@material-ui/core/Button';
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory, Link, useLocation } from 'react-router-dom';
 import UserPool from '../UserPool';
 import Sidebar from './Sidebar';
 
@@ -31,6 +31,7 @@ function Header({loggedIn, setLoggedIn}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   let history = useHistory();
+  let location = useLocation();
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -60,6 +61,11 @@ function Header({loggedIn, setLoggedIn}) {
     if (user) {
         user.signOut();
         setLoggedIn(false);
+        if (location.state != undefined) {
+          console.log("Number of keys in locaiton state: " + Object.keys(location.state));
+          delete location.state.loggedIn;
+        }
+        console.log("Logging out");
     }
   };
   console.log(loggedIn)
@@ -80,7 +86,7 @@ function Header({loggedIn, setLoggedIn}) {
           {/* </IconButton> */}
           <Sidebar/>
           <Typography variant="h6" className={classes.title}>
-            <Link to="/" style={linkStyle}>AssetBoard</Link>
+            <Link to="/" style={linkStyle}>FinStack</Link>
           </Typography>
 
           {loggedIn ? (

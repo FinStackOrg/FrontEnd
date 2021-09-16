@@ -32,7 +32,8 @@ const RobinhoodSignup = () => {
         } else if (codeType == 'mfa_code') {
             loginUrl = loginUrl + '&mfa_code=' + code
         } else if (codeType == 'challenge_code') {
-            loginUrl = loginUrl + '&challenge_code' + code
+            console.log("Code type was challenge code!")
+            loginUrl = loginUrl + '&challenge_code=' + code
         }
         console.log("Login url: " + loginUrl);
         fetch(loginUrl, requestOptions)
@@ -46,10 +47,14 @@ const RobinhoodSignup = () => {
                 setCodeType(jsonData.type)
             } else if ("loggedIn" in jsonData) {
                 console.log("Robinhood logged in")
+                console.log("Data: "+ jsonData.data)
                 history.push({
-                    pathname: "/"
+                    pathname: "/",
+                    state: {
+                        newData: jsonData.data
+                    }
                 })
-            } 
+            }
         })
         .catch(error => console.log('error', error))
     }
