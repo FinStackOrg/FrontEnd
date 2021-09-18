@@ -4,7 +4,16 @@ import Button from '@material-ui/core/Button';
 import { Grid } from "@material-ui/core";
 import { useHistory } from 'react-router-dom';
 import UserPool from '../../UserPool';
+import RobinhoodSignIn from './RobinhoodMock';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Box from '@mui/material/Box';
+import Avatar from '@mui/material/Avatar';
+import CssBaseline from '@mui/material/CssBaseline';
 
+const theme = createTheme();
 
 const RobinhoodSignup = () => {
     const [email, setEmail] = useState('');
@@ -64,44 +73,76 @@ const RobinhoodSignup = () => {
     }, [setAskCode, setCodeType])
 
     return (
-        <div>
-            <p>Robhinhood Sign Up Form</p>
-            <form onSubmit={onSubmit}>
-                <div>
-                    <TextField required id="outlined-required" label="Email" variant="outlined"
+        <ThemeProvider theme={theme}>
+            <Container component="main" maxWidth="xs">
+                <CssBaseline />
+                <Box
+                    sx={{
+                    marginTop: 8,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    }}
+                >
+                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                    <LockOutlinedIcon />
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
+                    Robinhood
+                    </Typography>
+                    <Typography component="h1" variant="h5">
+                    Sign in
+                    </Typography>
+                    <Box component="form" onSubmit={onSubmit} noValidate sx={{ mt: 1 }}>
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="email"
+                            label="Email Address"
+                            name="email"
+                            autoComplete="email"
+                            autoFocus
                             value={email}
                             onChange={event => setEmail(event.target.value)}
-                            />
-                </div>
-                <div>
-                    <TextField
-                        required
-                        id="outlined-password-input"
-                        label="Password"
-                        type="password"
-                        autoComplete="current-password"
-                        variant="outlined"
-                        value={password}
-                        onChange={event => setPassword(event.target.value)}
-                    />
-                </div>
-                { askCode && (
-                    <div>
-                        <TextField required id="outlined-required" label={codeType} variant="outlined"
-                        value={code}
-                        onChange={event => setCode(event.target.value)}
                         />
-                    </div>
-                )}
-                <div>
-                    <Grid container justifyContent= "center">
-                        <Button type='submit' variant="contained" color="primary">
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="password"
+                            label="Password"
+                            type="password"
+                            id="password"
+                            autoComplete="current-password"
+                            value={password}
+                            onChange={event => setPassword(event.target.value)}
+                        />
+                        { askCode && (
+                            <div>
+                                <TextField 
+                                fullWidth
+                                required id="outlined-required" 
+                                label={codeType} 
+                                variant="outlined"
+                                value={code}
+                                onChange={event => setCode(event.target.value)}
+                                />
+                            </div>
+                        )}
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="white"
+                            sx={{ mt: 3, mb: 2 }}
+                        >
                             Sign In
                         </Button>
-                    </Grid>
-                </div>
-            </form>
-        </div>
+                    </Box>
+                </Box>
+            </Container>
+        </ThemeProvider>
     )
 }
 
