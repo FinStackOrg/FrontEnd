@@ -4,10 +4,13 @@ import Verify from './SignUp/Verify'
 import Home from './Home/Home'
 import Login from  './Login/Login'
 import Robinhood from './Accounts/Robinhood/Robinhood';
+import RobinhoodSignIn from './Accounts/Robinhood/RobinhoodMock';
 import CoinbasePro from './Accounts/CoinbasePro/CoinbasePro';
 import {BrowserRouter, Route} from "react-router-dom";
+import TDAmeritrade from './Accounts/TDAmeritrade/TDAmeritrade';
+import TDLink from './Accounts/TDAmeritrade/TDLink';
+import Binance from './Accounts/Binance/Binance';
 
-// const currentConfig = Auth.configure();
 
 export default () => {
   return (
@@ -19,6 +22,10 @@ export default () => {
         <Route path="/Login" exact={true} component={Login}/>
         <Route path="/Robinhood" exact={true} component={Robinhood}/>
         <Route path="/CoinbasePro" exact={true} component={CoinbasePro}/>
+        <Route path="/TDAmeritrade" exact={true} component={TDAmeritrade}/>
+        {/* Route for getting link code for td_ameritrade */}
+        <Route path="/td" exact={true} component={TDLink}/>
+        <Route path="/Binance" exact={true} component={Binance}/>
       </BrowserRouter>
     </div>
   );

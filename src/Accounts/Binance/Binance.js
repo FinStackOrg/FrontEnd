@@ -1,17 +1,18 @@
-import RobinhoodSignup from "./RobinhoodSignup";
+import BinanceSignIn from "./BinanceSignIn";
 import { Grid } from "@material-ui/core";
 
 
-const Robinhood = () => {
+const Binance = () => {
 
 
     return (
         <div>
+            <p>Binance</p>
             <Grid container justifyContent= "center">
-                <RobinhoodSignup/>
+                <BinanceSignIn/>
             </Grid>
         </div>
     )
 }
 
-export default Robinhood;
+export default Binance;
