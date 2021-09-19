@@ -122,9 +122,10 @@ const RobinhoodSignup = () => {
                             <div>
                                 <TextField 
                                 fullWidth
-                                required id="outlined-required" 
+                                required 
+                                autoFocus
+                                id="outlined-required" 
                                 label={codeType} 
-                                variant="outlined"
                                 value={code}
                                 onChange={event => setCode(event.target.value)}
                                 />
