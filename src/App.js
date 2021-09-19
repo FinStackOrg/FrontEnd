@@ -9,8 +9,8 @@ import CoinbasePro from './Accounts/CoinbasePro/CoinbasePro';
 import {BrowserRouter, Route} from "react-router-dom";
 import TDAmeritrade from './Accounts/TDAmeritrade/TDAmeritrade';
 import TDLink from './Accounts/TDAmeritrade/TDLink';
+import Binance from './Accounts/Binance/Binance';
 
-// const currentConfig = Auth.configure();
 
 export default () => {
   return (
@@ -21,10 +21,11 @@ export default () => {
         <Route path ="/Verify" exact={true} component={Verify}/>
         <Route path="/Login" exact={true} component={Login}/>
         <Route path="/Robinhood" exact={true} component={Robinhood}/>
-        {/* <Route path="/Robinhood" exact={true} component={RobinhoodSignIn}/> */}
         <Route path="/CoinbasePro" exact={true} component={CoinbasePro}/>
         <Route path="/TDAmeritrade" exact={true} component={TDAmeritrade}/>
+        {/* Route for getting link code for td_ameritrade */}
         <Route path="/td" exact={true} component={TDLink}/>
+        <Route path="/Binance" exact={true} component={Binance}/>
       </BrowserRouter>
     </div>
   );

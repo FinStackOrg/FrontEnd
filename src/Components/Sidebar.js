@@ -46,6 +46,10 @@ export default function Sidebar() {
   const tdAmeritradeLink = () => {
     history.push("/TDAmeritrade")
   }
+
+  const binanceLink = () => {
+    history.push("/Binance")
+  }
   const list = () => (
     <div
       className={clsx(classes.list, [])}
@@ -72,6 +76,9 @@ export default function Sidebar() {
         </ListItem>
         <ListItem button key={'Link TDAmeritrade'} onClick={tdAmeritradeLink}>
             <ListItemText primary={'Link TDAmeritrade'} />
+        </ListItem>
+        <ListItem button key={'Link Binance'} onClick={binanceLink}>
+            <ListItemText primary={'Link Binance'} />
         </ListItem>
       </List>
     </div>
