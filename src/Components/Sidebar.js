@@ -50,6 +50,9 @@ export default function Sidebar() {
   const binanceLink = () => {
     history.push("/Binance")
   }
+  const coinbaseLink = () => {
+    history.push("/Coinbase")
+  }
   const list = () => (
     <div
       className={clsx(classes.list, [])}
@@ -79,6 +82,9 @@ export default function Sidebar() {
         </ListItem>
         <ListItem button key={'Link Binance'} onClick={binanceLink}>
             <ListItemText primary={'Link Binance'} />
+        </ListItem>
+        <ListItem button key={'Link Coinbase'} onClick={coinbaseLink}>
+            <ListItemText primary={'Link Coinbase'} />
         </ListItem>
       </List>
     </div>

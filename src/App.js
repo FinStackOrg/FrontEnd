@@ -10,6 +10,8 @@ import {BrowserRouter, Route} from "react-router-dom";
 import TDAmeritrade from './Accounts/TDAmeritrade/TDAmeritrade';
 import TDLink from './Accounts/TDAmeritrade/TDLink';
 import Binance from './Accounts/Binance/Binance';
+import Coinbase from './Accounts/Coinbase/Coinbase';
+import CoinbaseLink from './Accounts/Coinbase/CoinbaseLink';
 
 
 export default () => {
@@ -26,6 +28,8 @@ export default () => {
         {/* Route for getting link code for td_ameritrade */}
         <Route path="/td" exact={true} component={TDLink}/>
         <Route path="/Binance" exact={true} component={Binance}/>
+        <Route path="/Coinbase" exact={true} component={Coinbase}/>
+        <Route path="/coinbaseLink" exact={true} component={CoinbaseLink}/>
       </BrowserRouter>
     </div>
   );
