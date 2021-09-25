@@ -131,7 +131,7 @@ export default function SimpleCard({title, total, pctChange, assets}) {
           Total: {total}
         </Typography>
         <Typography className={pctChange.includes("-") ? classes.neg : classes.pos}>
-         Daily Change: {pctChange}{pctChange.includes("-")? <ArrowDownwardIcon /> : <ArrowUpwardIcon/>}
+         Daily Change: {pctChange}% {pctChange.includes("-")? <ArrowDownwardIcon /> : <ArrowUpwardIcon/>}
         </Typography>
         {assetClicked && 
           <div style={{ height: 250, width: '100%' }} className={gridStylesLayout.root}>

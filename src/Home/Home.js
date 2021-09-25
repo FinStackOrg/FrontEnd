@@ -90,6 +90,13 @@ const Home = () => {
 
     }, [loggedIn, setLoggedIn]);
 
+    const accountTotal = (data) => (
+        // <List>
+        <Typography variant="h4" gutterBottom>
+        Account Total: {data['accountTotal']}
+        </Typography>
+    );
+
     const list = (data) => (
         // <List>
             data.map((account) => (
@@ -107,8 +114,12 @@ const Home = () => {
                     <Typography variant="h2" gutterBottom>
                         Hello {firstName}
                     </Typography>
+
                     { hasData && 
-                    list(data)
+                    accountTotal(data[0])
+                    }
+                    { hasData && 
+                    list(data.slice(1,data.length))
                     }
 
                 </div>
