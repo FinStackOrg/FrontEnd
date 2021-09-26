@@ -14,6 +14,7 @@ const Home = () => {
 
     const [loggedIn, setLoggedIn] = useState(false);
     const [data, setData] = useState([]);
+    const [username, setUsername] = useState('')
     const [hasData, setHasData] = useState(false);
     const [firstName, setFirstName] = useState('');
     let history = useHistory();
@@ -51,6 +52,8 @@ const Home = () => {
                         }
                     });
                     var username = user.getUsername()
+                    setUsername(username)
+                    console.log("username: " + username)
                     var homePageUrl = "https://ji1g9w5p36.execute-api.us-west-1.amazonaws.com/test/homePage/" + username
                     console.log("Url to reach: " + homePageUrl)
                     fetch(homePageUrl, requestOptions)
@@ -93,7 +96,7 @@ const Home = () => {
     const accountTotal = (data) => (
         // <List>
         <Typography variant="h4" gutterBottom>
-        Account Total: {data['accountTotal']}
+        Account Total: {data['accountTotal'].toFixed(2)}
         </Typography>
     );
 
@@ -101,7 +104,7 @@ const Home = () => {
         // <List>
             data.map((account) => (
                 // <ListItem button key={account.name}>
-                    <SimpleCard title={account.name} total={account.account_total} pctChange={account.total_pct_change} assets={account.assets}/>
+                    <SimpleCard title={account.name} total={account.account_total} pctChange={account.total_pct_change} assets={account.assets} username={username}/>
                 // </ListItem>
             ))
         

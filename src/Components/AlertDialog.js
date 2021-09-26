@@ -5,11 +5,18 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import UserPool from '../UserPool';
 
 class AlertDialog extends React.Component {
-  state = {
-    open: false
-  };
+
+    constructor(props){
+        super(props);
+        this.state = {
+            title: this.props.title,
+            open: false,
+            username: this.props.username
+        }
+    }
 
   handleClickOpen = () => {
     this.setState({ open: true });
@@ -20,14 +27,28 @@ class AlertDialog extends React.Component {
   };
 
   handleAgree = () => {
-    console.log("I agree!");
+    console.log(this.state.username)
+    console.log("Deleted account");
+    var requestOptions = {
+        method: 'POST',
+        redirect: 'follow'
+        };
+    const deleteUrl = "https://ji1g9w5p36.execute-api.us-west-1.amazonaws.com/test/deleteaccount?userId=" + this.state.username + "&name=" + this.state.title
+        console.log("Url to reach: " + deleteUrl)
+        fetch(deleteUrl, requestOptions)
+        .then(response => response.text())
+        .then(data => {
+            console.log("Was able to delete account")
+            this.setState(this.state);
+        })
     this.handleClose();
   };
   handleDisagree = () => {
-    console.log("I do not agree.");
+    console.log("Cancelled account deletion.");
     this.handleClose();
   };
   render() {
+    const {open, title, username} = this.state;
     return (
       <div>
         {/* Button to trigger the opening of the dialog */}

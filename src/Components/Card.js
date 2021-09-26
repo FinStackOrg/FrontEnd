@@ -69,7 +69,7 @@ const links = {
 
 }
 
-export default function SimpleCard({title, total, pctChange, assets}) {
+export default function SimpleCard({title, total, pctChange, assets, username}) {
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
 
@@ -144,7 +144,7 @@ export default function SimpleCard({title, total, pctChange, assets}) {
         {assetClicked ? (<Button size="small" onClick={onClickAssets} >Close Assets</Button>)
           : <Button size="small" onClick={onClickAssets} >Show Assets</Button>
         }
-        <AlertDialog />
+        <AlertDialog title = {title} username={username}/>
       </CardActions>
     </Card>
   );
