@@ -11,6 +11,7 @@ import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward'
 import { DataGrid } from '@mui/x-data-grid';
 import clsx from 'clsx';
 import {Link} from 'react-router-dom';
+import AlertDialog from "./AlertDialog";
 
 const useStyles = makeStyles({
   root: {
@@ -143,6 +144,7 @@ export default function SimpleCard({title, total, pctChange, assets}) {
         {assetClicked ? (<Button size="small" onClick={onClickAssets} >Close Assets</Button>)
           : <Button size="small" onClick={onClickAssets} >Show Assets</Button>
         }
+        <AlertDialog />
       </CardActions>
     </Card>
   );
