@@ -4,7 +4,6 @@ import Button from '@material-ui/core/Button';
 import { Grid } from "@material-ui/core";
 import { useHistory } from 'react-router-dom';
 import UserPool from '../../UserPool';
-import RobinhoodSignIn from './RobinhoodMock';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
@@ -59,9 +58,9 @@ const RobinhoodSignup = () => {
                 console.log("Data: "+ jsonData.data)
                 history.push({
                     pathname: "/",
-                    state: {
-                        newData: jsonData.data
-                    }
+                    // state: {
+                    //     newData: jsonData.data
+                    // }
                 })
             }
         })
