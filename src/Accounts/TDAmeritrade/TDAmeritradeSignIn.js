@@ -11,7 +11,7 @@ const TDAmeritradeSignIn = () => {
         color: "#78909c",
         fontWeight: "500"
       }
-    const tdLink = "https://auth.tdameritrade.com/auth?response_type=code&redirect_uri=https%3A%2F%2F127.0.0.1%3A8080&client_id=GZ9VMXGZI13DUW4HJEO89XHJICDR8NGN%40AMER.OAUTHAP";
+    const tdLink = "https://auth.tdameritrade.com/auth?response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Ftd&client_id=GZ9VMXGZI13DUW4HJEO89XHJICDR8NGN%40AMER.OAUTHAP";
     return (
         <div>
             <Button
