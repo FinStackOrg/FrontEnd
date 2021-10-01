@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -7,56 +7,49 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import UserPool from '../UserPool';
 
-class AlertDialog extends React.Component {
 
-    constructor(props){
-        super(props);
-        this.state = {
-            title: this.props.title,
-            open: false,
-            username: this.props.username
-        }
-    }
+export default function AlertDialog ({title, username, reload, setReload}) {
 
-  handleClickOpen = () => {
-    this.setState({ open: true });
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true)
+
   };
 
-  handleClose = () => {
-    this.setState({ open: false });
-  };
+    const handleClose = () => {
+        setOpen(false)
+    };
 
-  handleAgree = () => {
-    console.log(this.state.username)
-    console.log("Deleted account");
-    var requestOptions = {
-        method: 'POST',
-        redirect: 'follow'
-        };
-    const deleteUrl = "https://ji1g9w5p36.execute-api.us-west-1.amazonaws.com/test/deleteaccount?userId=" + this.state.username + "&name=" + this.state.title
-        console.log("Url to reach: " + deleteUrl)
-        fetch(deleteUrl, requestOptions)
-        .then(response => response.text())
-        .then(data => {
-            console.log("Was able to delete account")
-            this.setState(this.state);
-        })
-    this.handleClose();
+  const handleAgree = () => {
+      console.log(username)
+      console.log("Deleted account");
+      var requestOptions = {
+          method: 'POST',
+          redirect: 'follow'
+          };
+      const deleteUrl = "https://ji1g9w5p36.execute-api.us-west-1.amazonaws.com/test/deleteaccount?userId=" + username + "&name=" + title
+          console.log("Url to reach: " + deleteUrl)
+          fetch(deleteUrl, requestOptions)
+          .then(response => response.text())
+          .then(data => {
+              console.log("Was able to delete account")
+          })
+      handleClose();
+      setReload(true);
   };
-  handleDisagree = () => {
-    console.log("Cancelled account deletion.");
-    this.handleClose();
+  const handleDisagree = () => {
+      console.log("Cancelled account deletion.");
+      handleClose();
   };
-  render() {
-    const {open, title, username} = this.state;
     return (
       <div>
         {/* Button to trigger the opening of the dialog */}
-        <Button onClick={this.handleClickOpen}>Unlink Account</Button>
+        <Button onClick={handleClickOpen}>Unlink Account</Button>
         {/* Dialog that is displayed if the state open is true */}
         <Dialog
-          open={this.state.open}
-          onClose={this.handleClose}
+          open={open}
+          onClose={handleClose}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
@@ -69,17 +62,14 @@ class AlertDialog extends React.Component {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleDisagree} color="primary">
+            <Button onClick={handleDisagree} color="primary">
               No
             </Button>
-            <Button onClick={this.handleAgree} color="primary" autoFocus>
+            <Button onClick={handleAgree} color="primary" autoFocus>
               Yes
             </Button>
           </DialogActions>
         </Dialog>
       </div>
     );
-  }
 }
-
-export default AlertDialog;

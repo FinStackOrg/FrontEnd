@@ -69,7 +69,7 @@ const links = {
 
 }
 
-export default function SimpleCard({title, total, pctChange, assets, username}) {
+export default function SimpleCard({title, total, pctChange, assets, username, reload, setReload}) {
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
 
@@ -121,7 +121,10 @@ export default function SimpleCard({title, total, pctChange, assets, username}) 
   useEffect(() => {
     console.log("Came here!")
     console.log("asset Clicked: " + assetClicked)
-  }, [assetClicked])
+    if (reload) {
+
+    }
+  }, [assetClicked, reload])
   return (
     <Card className={classes.root}>
       <CardContent>
@@ -144,7 +147,7 @@ export default function SimpleCard({title, total, pctChange, assets, username}) 
         {assetClicked ? (<Button size="small" onClick={onClickAssets} >Close Assets</Button>)
           : <Button size="small" onClick={onClickAssets} >Show Assets</Button>
         }
-        <AlertDialog title = {title} username={username}/>
+        <AlertDialog title = {title} username={username} reload={reload} setReload={setReload}/>
       </CardActions>
     </Card>
   );
