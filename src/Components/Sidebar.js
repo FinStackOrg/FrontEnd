@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -13,6 +13,8 @@ import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
 import { useHistory } from 'react-router-dom';
 
+
+
 const useStyles = makeStyles({
   list: {
     width: 250,
@@ -22,17 +24,22 @@ const useStyles = makeStyles({
   },
 });
 
+
+
+
+
 export default function Sidebar() {
   const classes = useStyles();
   const [state, setState] = React.useState(false);
   let history = useHistory();
 
-  const toggleDrawer = (open) => (event) => {
+
+  const toggleDrawer = (openDrawer) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
 
-    setState(open);
+    setState(openDrawer);
   };
 
   const robinhoodLink = () => {
@@ -60,11 +67,6 @@ export default function Sidebar() {
       onClick={toggleDrawer(false)}
       onKeyDown={toggleDrawer(false)}
     >
-      {/* <List>
-        <ListItem button key={'Link Account'} onClick={robinhoodLink}>
-            <ListItemText primary={'Link Account'} />
-        </ListItem>
-      </List> */}
       <List>
         {/* {['Link Robinhood', 'Link CoinbasePro'].map((text, index) => (
           <ListItem button key={text} onClick={}>
