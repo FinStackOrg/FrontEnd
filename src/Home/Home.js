@@ -58,9 +58,9 @@ const Home = () => {
                     console.log("Url to reach: " + homePageUrl)
                     fetch(homePageUrl, requestOptions)
                     .then(response => response.text())
-                    .then(data => {
+                    .then(received_data => {
                         console.log("Was able to reach home page endpoint")
-                        var jsonData = JSON.parse(data)
+                        var jsonData = JSON.parse(received_data)
                         setData(jsonData)
                         if (jsonData.length > 0) {
                             console.log("Had data")
