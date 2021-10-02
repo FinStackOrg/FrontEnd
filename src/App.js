@@ -12,6 +12,7 @@ import TDLink from './Accounts/TDAmeritrade/TDLink';
 import Binance from './Accounts/Binance/Binance';
 import Coinbase from './Accounts/Coinbase/Coinbase';
 import CoinbaseLink from './Accounts/Coinbase/CoinbaseLink';
+import Webull from './Accounts/Webull/Webull';
 
 
 export default () => {
@@ -30,6 +31,7 @@ export default () => {
         <Route path="/Binance" exact={true} component={Binance}/>
         <Route path="/Coinbase" exact={true} component={Coinbase}/>
         <Route path="/coinbaseLink" exact={true} component={CoinbaseLink}/>
+        <Route path="/Webull" exact={true} component={Webull}/>
       </BrowserRouter>
     </div>
   );
