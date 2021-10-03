@@ -29,14 +29,15 @@ export default function AlertDialog ({title, username, reload, setReload}) {
           redirect: 'follow'
           };
       const deleteUrl = "https://ji1g9w5p36.execute-api.us-west-1.amazonaws.com/test/deleteaccount?userId=" + username + "&name=" + title
-          console.log("Url to reach: " + deleteUrl)
-          fetch(deleteUrl, requestOptions)
-          .then(response => response.text())
-          .then(data => {
-              console.log("Was able to delete account")
-          })
-      handleClose();
-      setReload(true);
+      console.log("Url to reach: " + deleteUrl)
+      fetch(deleteUrl, requestOptions)
+      .then(response => response.text())
+      .then(data => {
+          console.log("Was able to delete account")
+          handleClose();
+          setReload(true);
+      })
+      .catch(error => console.log('It errored when deleting account!', error))
   };
   const handleDisagree = () => {
       console.log("Cancelled account deletion.");

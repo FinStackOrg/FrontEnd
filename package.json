@@ -10,6 +10,7 @@
     "@material-ui/icons": "^4.11.2",
     "@material-ui/pickers": "^3.3.10",
     "@mui/icons-material": "^5.0.0",
+    "@mui/lab": "^5.0.0-alpha.49",
     "@mui/material": "^5.0.0",
     "@mui/x-data-grid": "^4.0.0",
     "@testing-library/jest-dom": "^5.11.4",

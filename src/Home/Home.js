@@ -9,6 +9,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import { LensTwoTone } from '@material-ui/icons';
 import { Typography } from '@material-ui/core';
+import TabCard from '../Components/TabCard';
 
 const Home = () => {
 
@@ -103,10 +104,22 @@ const Home = () => {
 
     const list = (data) => (
         // <List>
+            // account is each item inside data
             data.map((account) => (
-                // <ListItem button key={account.name}>
-                    <SimpleCard title={account.name} total={account.account_total} pctChange={account.total_pct_change} assets={account.assets} username={username} reload={reload} setReload={setReload}/>
-                // </ListItem>
+                // if (account.name.startsWith("We")){
+                //     return (
+                //         <SimpleCard title={account.name} total={account.account_total} pctChange={account.total_pct_change} assets={account.assets[0]} username={username} reload={reload} setReload={setReload}/>
+                //     )
+                // } else{
+
+                // }
+                // { account.name.startsWith("We") ? 
+                //     <SimpleCard title={account.name} total={account.account_total} pctChange={account.total_pct_change} assets={account.assets[0]} username={username} reload={reload} setReload={setReload}/>
+
+                // }
+                
+                // <SimpleCard title={account.name} total={account.account_total} pctChange={account.total_pct_change} assets={account.assets} username={username} reload={reload} setReload={setReload}/>
+                <SimpleCard account={account} username={username} reload={reload} setReload={setReload}/>
             ))
         
     );
