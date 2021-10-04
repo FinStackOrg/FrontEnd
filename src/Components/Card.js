@@ -87,14 +87,11 @@ const links = {
   const [title, setTitle] = useState(account.name)
   const [total, setTotal] = useState(account.account_total)
   const [pctChange, setPctChange] = useState(account.total_pct_change)
+  const [rendered, setRendered] = useState(false);
   console.log("Total pct change: " + account.total_all_time_pct_change)
   const assets = account.assets
   console.log("Account title: " + title)
 
-
-  const handleTabChange = (event, newValue) => {
-      setTabValue(newValue);
-  };
   const onClickAssets = () => {
     // set to clicked
     console.log("Came to asset clicked!");
@@ -102,7 +99,7 @@ const links = {
   }
 
   const onClickShowButton = () => {
-    if (buttonType == "Daily Change") {
+    if (buttonType == "Daily") {
         // switch to show daily change now
         setButtonType("All Time")
         setChangeLabel("Daily Change")
@@ -110,7 +107,7 @@ const links = {
     } else if (buttonType == "All Time"){
         // switch to Show all time list
         setChangeLabel("All Time Change")
-        setButtonType("Daily Change")
+        setButtonType("Daily")
         setPctChange(account.total_all_time_pct_change)
     }
   }
@@ -136,11 +133,11 @@ const links = {
               pos: !params.value.startsWith("-"),
             })
           }, 
-          {field: 'Value', headerName: 'Current Value', width: 150, type: 'number'}, 
+          {field: 'Value', headerName: 'Current Value', width: 200, type: 'number'}, 
           {field: 'Share_Quantity', headerName: 'Quantity', width: 200, type: 'number'}, 
           {field: 'Share_Price', headerName: 'Share Price', width: 200, type: 'number'}, 
         ]
-    } else if (buttonType == "Daily Change") {
+    } else if (buttonType == "Daily") {
       console.log("Should now show 7 columns")
       return [
         {field: 'Ticker', width: 150}, 
@@ -153,7 +150,7 @@ const links = {
             pos: !params.value.startsWith("-"),
           })
         }, 
-        {field: 'Value', headerName: 'Current Value', width: 150, type: 'number'}, 
+        {field: 'Value', headerName: 'Current Value', width: 200, type: 'number'}, 
         {field: 'Share_Quantity', headerName: 'Quantity', width: 200, type: 'number'}, 
         {field: 'Share_Price', headerName: 'Share Price', width: 200, type: 'number'}, 
         {field: 'Purchased_Price', headerName: 'Purchased Price', width: 200, type: 'number'}
@@ -167,7 +164,7 @@ const links = {
               {id: index, Ticker: asset[0], Name: asset[1], Change: asset[2], Value: asset[3], 
               Share_Quantity: asset[4], Share_Price: asset[5]}
             ))
-    } else if (buttonType == "Daily Change") {
+    } else if (buttonType == "Daily") {
       console.log("Came here???????")
       return showAssets.map((asset, index) => (
               {id: index, Ticker: asset[0], Name: asset[1], Change: asset[6], Value: asset[3], 
@@ -200,6 +197,7 @@ const links = {
     if (reload) {
       console.log("Reload page")
     }
+    console.log("Rendered value: " + rendered)
   }, [assetClicked, reload, buttonType])
   return (
     <Card className={classes.root}>

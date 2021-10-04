@@ -18,7 +18,7 @@ const Home = () => {
     const [username, setUsername] = useState('')
     const [hasData, setHasData] = useState(false);
     const [firstName, setFirstName] = useState('');
-    const [reload, setReload] = useState(false)
+    const [reload, setReload] = useState(false);
     let history = useHistory();
     let location = useLocation();
     console.log("Started here")
@@ -71,20 +71,6 @@ const Home = () => {
                             console.log("Overall data: " + jsonData)
                         }
                     })
-                    // // check location state for newData being added
-                    // if (location.state != undefined) {
-                    //     if ("newData" in location.state) {
-                    //         console.log("Data sent to homepage")
-                    //         if (data.length == 0) {
-                    //             console.log("Data length was 0")
-                    //             setData([location.state.newData])
-                    //         } else {
-                    //             setData(arr => [...arr, location.state.newData])
-                    //         }
-                    //         setHasData(true)
-                    //         console.log("New data: " + data)
-                    //     }
-                    // }
                 }
             });
         } else {
@@ -106,23 +92,12 @@ const Home = () => {
         // <List>
             // account is each item inside data
             data.map((account) => (
-                // if (account.name.startsWith("We")){
-                //     return (
-                //         <SimpleCard title={account.name} total={account.account_total} pctChange={account.total_pct_change} assets={account.assets[0]} username={username} reload={reload} setReload={setReload}/>
-                //     )
-                // } else{
-
-                // }
-                // { account.name.startsWith("We") ? 
-                //     <SimpleCard title={account.name} total={account.account_total} pctChange={account.total_pct_change} assets={account.assets[0]} username={username} reload={reload} setReload={setReload}/>
-
-                // }
-                
-                // <SimpleCard title={account.name} total={account.account_total} pctChange={account.total_pct_change} assets={account.assets} username={username} reload={reload} setReload={setReload}/>
                 <SimpleCard account={account} username={username} reload={reload} setReload={setReload}/>
             ))
         
     );
+
+        
     return (
         <div>
             <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
