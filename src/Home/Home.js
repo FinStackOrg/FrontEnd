@@ -21,7 +21,6 @@ const Home = () => {
     const [reload, setReload] = useState(false);
     let history = useHistory();
     let location = useLocation();
-    console.log("Started here")
 
     useEffect(() => {
         // try to get the session here
@@ -33,44 +32,36 @@ const Home = () => {
                 } else {
                     console.log("Found User")
                     setLoggedIn(true);
-                    console.log("Came to logged in")
                     var requestOptions = {
                     method: 'GET',
                     redirect: 'follow'
                     };
                     user.getUserAttributes((err1, result) => {
                         if (err1) {
-                            console.log("erroed out");
+                            console.log("Errored when getting user attributes")
                         } else {
-                            console.log("GEt user attributes")
                             for (var i = 0; i < result.length; i++) {
-                                console.log(
-                                    'attribute ' + result[i].getName() + ' has value ' + result[i].getValue()
-                                );
                                 if (result[i].getName() == "given_name") {
                                     setFirstName(result[i].getValue());
                                 }
                             }
                         }
                     });
-                    var username = user.getUsername()
-                    setUsername(username)
-                    console.log("username: " + username)
-                    var homePageUrl = "https://ji1g9w5p36.execute-api.us-west-1.amazonaws.com/test/homePage/" + username
-                    console.log("Url to reach: " + homePageUrl)
+                    var username1 = user.getUsername()
+                    setUsername(username1)
+                    var homePageUrl = "https://ji1g9w5p36.execute-api.us-west-1.amazonaws.com/test/homePage/" + username1
                     fetch(homePageUrl, requestOptions)
                     .then(response => response.text())
                     .then(received_data => {
                         console.log("Was able to reach home page endpoint")
                         var jsonData = JSON.parse(received_data)
+                        console.log("Data from homepage: " + jsonData[0].accountTotal)
                         setData(jsonData)
                         if (jsonData.length > 0) {
-                            console.log("Had data")
                             setHasData(true)
-                            console.log("Data is: " + jsonData[0].assets)
-                            console.log("Overall data: " + jsonData)
                         }
                     })
+                    .catch(err2 => console.log("Error: " , err2))
                 }
             });
         } else {

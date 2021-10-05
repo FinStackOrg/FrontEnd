@@ -64,24 +64,6 @@ const Login = () => {
     return (
         <div>
             <Header/>
-            {/* <form onSubmit={onSubmit}>
-                <TextField required id="outlined-required" label="Email" variant="outlined"
-                        value={email}
-                        onChange={event => setEmail(event.target.value)}
-                        />
-                <TextField
-                    id="outlined-password-input"
-                    label="Password"
-                    type="password"
-                    autoComplete="current-password"
-                    variant="outlined"
-                    value={password}
-                    onChange={event => setPassword(event.target.value)}
-                />
-                <Button type='submit' variant="contained" color="primary">
-                    Log In
-                </Button>
-            </form> */}
             <ThemeProvider theme={theme}>
                 <Grid container component="main" sx={{ height: '100vh' }}>
                     <CssBaseline />

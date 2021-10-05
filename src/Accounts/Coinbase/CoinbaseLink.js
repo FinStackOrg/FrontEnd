@@ -15,8 +15,6 @@ const CoinbaseLink = () => {
     const [code, setCode] = React.useState('');
     const [hasCode, setHasCode] = React.useState(false);
     let query = useQuery().toString();
-    console.log("Query: "+ query)
-    console.log("Type: " + typeof query)
     let history = useHistory();
     var user = UserPool.getCurrentUser();
     var userId = user.getUsername();
@@ -43,7 +41,6 @@ const CoinbaseLink = () => {
             .then(response => response.text())
             .then(data => {
                 var jsonData = JSON.parse(data)
-                console.log("Coinbase logged in")
                 console.log("Data: "+ jsonData.data)
                 history.push({
                     pathname: "/"

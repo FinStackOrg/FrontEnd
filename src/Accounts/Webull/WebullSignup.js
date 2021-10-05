@@ -29,21 +29,17 @@ const WebullSignup = () => {
     const onSubmit = event => {
         // call robinhood Login endpoint
         event.preventDefault();
-        console.log("Came here!!")
         var requestOptions = {
             method: 'POST',
             redirect: 'follow'
         };
         let webullUrl = "https://ji1g9w5p36.execute-api.us-west-1.amazonaws.com/test/webull/login?username="
         webullUrl = webullUrl + username + "&password=" + password + "&userId=" + userId
-        console.log("Login url: " + webullUrl);
         fetch(webullUrl, requestOptions)
         .then(response => response.text())
         .then(data => {
             var jsonData = JSON.parse(data)
-            console.log("data: " + data)
             console.log("Webull logged in")
-            console.log("Data: "+ jsonData.data)
             history.push({
                 pathname: "/",
             })

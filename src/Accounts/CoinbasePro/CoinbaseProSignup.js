@@ -18,7 +18,6 @@ const CoinbaseProSignup = () => {
     const onSubmit = event => {
         // call robinhood Login endpoint
         event.preventDefault();
-        console.log("Came here!!")
         var requestOptions = {
             method: 'POST',
             redirect: 'follow'
@@ -34,10 +33,8 @@ const CoinbaseProSignup = () => {
         .then(response => response.text())
         .then(data => {
             var jsonData = JSON.parse(data)
-            console.log("data: " + data)
             if ("loggedIn" in jsonData) {
-                console.log("Coinbase linked")
-                console.log("Data: "+ jsonData.data)
+                console.log("Coinbase Pro linked")
                 history.push({
                     pathname: "/"
                 })

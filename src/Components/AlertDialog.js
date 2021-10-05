@@ -22,14 +22,12 @@ export default function AlertDialog ({title, username, reload, setReload}) {
     };
 
   const handleAgree = () => {
-      console.log(username)
       console.log("Deleted account");
       var requestOptions = {
           method: 'POST',
           redirect: 'follow'
           };
       const deleteUrl = "https://ji1g9w5p36.execute-api.us-west-1.amazonaws.com/test/deleteaccount?userId=" + username + "&name=" + title
-      console.log("Url to reach: " + deleteUrl)
       fetch(deleteUrl, requestOptions)
       .then(response => response.text())
       .then(data => {

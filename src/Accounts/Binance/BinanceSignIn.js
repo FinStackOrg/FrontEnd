@@ -17,7 +17,6 @@ const BinanceSignIn = () => {
     const onSubmit = event => {
         // call Binance Login endpoint
         event.preventDefault();
-        console.log("Came here!!")
         var requestOptions = {
             method: 'POST',
             redirect: 'follow'
@@ -27,15 +26,13 @@ const BinanceSignIn = () => {
         var encodedUserId = encodeURIComponent(userId);
         var loginUrl = 'https://ji1g9w5p36.execute-api.us-west-1.amazonaws.com/test/binance/login?api_key='
         + encodedApiKey +'&api_secret=' + encodedApiSecret + "&userId=" + encodedUserId;
-        console.log("Login url: " + loginUrl);
         fetch(loginUrl, requestOptions)
         .then(response => response.text())
         .then(data => {
             var jsonData = JSON.parse(data)
             console.log("data: " + data)
             if ("loggedIn" in jsonData) {
-                console.log("Coinbase linked")
-                console.log("Data: "+ jsonData.data)
+                console.log("Binance linked")
                 history.push({
                     pathname: "/"
                 })

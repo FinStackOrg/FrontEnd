@@ -124,114 +124,114 @@ const SignUp = () => {
                     alignItems: 'center',
                 }}
                 >
-                <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                    <LockOutlinedIcon />
-                </Avatar>
-                <Typography component="h1" variant="h5">
-                    Sign up
-                </Typography>
-                <Box component="form" onSubmit={onSubmit} sx={{ mt: 3 }}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                            autoComplete="fname"
-                            name="firstName"
-                            required
-                            fullWidth
-                            id="firstName"
-                            label="First Name"
-                            variant="outlined"
-                            autoFocus
-                            value={fName.Value}
-                            onChange={event => setfName(prevState => ({
-                                    ...prevState,
-                                    Value:event.target.value
-                            }))}
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                            required
-                            fullWidth
-                            id="lastName"
-                            label="Last Name"
-                            name="lastName"
-                            variant="outlined"
-                            autoComplete="lname"
-                            value={lName.Value}
-                            onChange={event => setlName(prevState => ({
-                                    ...prevState,
-                                    Value:event.target.value
-                            }))}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                            required
-                            fullWidth
-                            id="email"
-                            label="Email Address"
-                            name="email"
-                            variant="outlined"
-                            autoComplete="email"
-                            value={email}
-                            onChange={event => setEmail(event.target.value)}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                <KeyboardDatePicker
-                                    disableFuture
-                                    required
-                                    fullWidth
-                                    variant="outlined"
-                                    format="MM/dd/yyyy"
-                                    margin="normal"
-                                    id="date-picker-inline"
-                                    label="Birth Date"
-                                    format="MM-dd-yyyy"
-                                    KeyboardButtonProps={{
-                                        'aria-label': 'change date',
-                                    }}
-                                    value={bday.Value}
-                                    onChange={handleDateChange}
+                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                        <LockOutlinedIcon />
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
+                        Sign up
+                    </Typography>
+                    <Box component="form" onSubmit={onSubmit} sx={{ mt: 3 }}>
+                        <Grid container spacing={2}>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                autoComplete="fname"
+                                name="firstName"
+                                required
+                                fullWidth
+                                id="firstName"
+                                label="First Name"
+                                variant="outlined"
+                                autoFocus
+                                value={fName.Value}
+                                onChange={event => setfName(prevState => ({
+                                        ...prevState,
+                                        Value:event.target.value
+                                }))}
                                 />
-                            </MuiPickersUtilsProvider>
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                required
+                                fullWidth
+                                id="lastName"
+                                label="Last Name"
+                                name="lastName"
+                                variant="outlined"
+                                autoComplete="lname"
+                                value={lName.Value}
+                                onChange={event => setlName(prevState => ({
+                                        ...prevState,
+                                        Value:event.target.value
+                                }))}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                required
+                                fullWidth
+                                id="email"
+                                label="Email Address"
+                                name="email"
+                                variant="outlined"
+                                autoComplete="email"
+                                value={email}
+                                onChange={event => setEmail(event.target.value)}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                    <KeyboardDatePicker
+                                        disableFuture
+                                        required
+                                        fullWidth
+                                        variant="outlined"
+                                        format="MM/dd/yyyy"
+                                        margin="normal"
+                                        id="date-picker-inline"
+                                        label="Birth Date"
+                                        format="MM-dd-yyyy"
+                                        KeyboardButtonProps={{
+                                            'aria-label': 'change date',
+                                        }}
+                                        value={bday.Value}
+                                        onChange={handleDateChange}
+                                    />
+                                </MuiPickersUtilsProvider>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                required
+                                fullWidth
+                                margin="normal"
+                                name="password"
+                                label="Password"
+                                type="password"
+                                id="password"
+                                variant="outlined"
+                                autoComplete="new-password"
+                                value={password}
+                                // onChange={passwordChange}
+                                onChange={event => setPassword(event.target.value)}
+                                inputProps={{ className: styles.password, pattern: "^(?=.*[0-9])(?=.*[a-z])(?=.*[!@#$%^&*])(?=.*[A-Z]).{8,32}$" }}
+                                />
+                            </Grid>
                         </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                            required
-                            fullWidth
-                            margin="normal"
-                            name="password"
-                            label="Password"
-                            type="password"
-                            id="password"
-                            variant="outlined"
-                            autoComplete="new-password"
-                            value={password}
-                            // onChange={passwordChange}
-                            onChange={event => setPassword(event.target.value)}
-                            inputProps={{ className: styles.password, pattern: "^(?=.*[0-9])(?=.*[a-z])(?=.*[!@#$%^&*])(?=.*[A-Z]).{8,32}$" }}
-                            />
-                        </Grid>
-                    </Grid>
-                    <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    sx={{ mt: 3, mb: 2 }}
-                    >
-                    Sign Up
-                    </Button>
-                    <Grid container justifyContent="flex-end">
-                    <Grid item>
-                        <Button size="small" onClick={loginClick}>
-                        Already have an account? Log in
+                        <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        sx={{ mt: 3, mb: 2 }}
+                        >
+                        Sign Up
                         </Button>
-                    </Grid>
-                    </Grid>
-                </Box>
+                        <Grid container justifyContent="flex-end">
+                        <Grid item>
+                            <Button size="small" onClick={loginClick}>
+                            Already have an account? Log in
+                            </Button>
+                        </Grid>
+                        </Grid>
+                    </Box>
                 </Box>
             </Container>
         </ThemeProvider>

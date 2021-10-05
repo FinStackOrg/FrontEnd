@@ -88,13 +88,10 @@ const links = {
   const [total, setTotal] = useState(account.account_total)
   const [pctChange, setPctChange] = useState(account.total_pct_change)
   const [rendered, setRendered] = useState(false);
-  console.log("Total pct change: " + account.total_all_time_pct_change)
   const assets = account.assets
-  console.log("Account title: " + title)
 
   const onClickAssets = () => {
     // set to clicked
-    console.log("Came to asset clicked!");
     setAssetClicked(!assetClicked)
   }
 
@@ -121,7 +118,6 @@ const links = {
   const gridStylesLayout = gridStyles();
   const getColumns = () => {
     if (buttonType == "All Time"){
-        console.log("Will show 6 columns")
         return [
           {field: 'Ticker', width: 150}, 
           {field: 'Name', width: 150}, 
@@ -138,7 +134,6 @@ const links = {
           {field: 'Share_Price', headerName: 'Share Price', width: 200, type: 'number'}, 
         ]
     } else if (buttonType == "Daily") {
-      console.log("Should now show 7 columns")
       return [
         {field: 'Ticker', width: 150}, 
         {field: 'Name', width: 150}, 
@@ -191,14 +186,6 @@ const links = {
     />
   )
 
-  useEffect(() => {
-    console.log("Came here!")
-    console.log("asset Clicked: " + assetClicked)
-    if (reload) {
-      console.log("Reload page")
-    }
-    console.log("Rendered value: " + rendered)
-  }, [assetClicked, reload, buttonType])
   return (
     <Card className={classes.root}>
 

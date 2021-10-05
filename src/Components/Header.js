@@ -12,6 +12,7 @@ import Button from '@material-ui/core/Button';
 import { useHistory, Link, useLocation } from 'react-router-dom';
 import UserPool from '../UserPool';
 import Sidebar from './Sidebar';
+import ChangePassword from './ChangePassword';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,6 +42,12 @@ function Header({loggedIn, setLoggedIn}) {
     setAnchorEl(null);
   };
 
+  const changePasswordClick = () => {
+    history.push({
+      pathname: "/ChangePassword",
+    });
+  }
+
   const signUp = event => {
     event.preventDefault();
     history.push("/SignUp")
@@ -55,6 +62,7 @@ function Header({loggedIn, setLoggedIn}) {
     textDecoration: "none",
     color: 'white'
   }
+  
 
   const logout = () => {
     const user = UserPool.getCurrentUser();
@@ -62,10 +70,10 @@ function Header({loggedIn, setLoggedIn}) {
         user.signOut();
         setLoggedIn(false);
         if (location.state != undefined) {
-          console.log("Number of keys in locaiton state: " + Object.keys(location.state));
           delete location.state.loggedIn;
         }
         console.log("Logging out");
+        history.push("/")
     }
   };
   console.log(loggedIn)
@@ -75,15 +83,6 @@ function Header({loggedIn, setLoggedIn}) {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          {/* <IconButton edge="start" className={classes.menuButton} color="inherit" 
-                      aria-label="menu" 
-                      aria-controls="menu-appbar-1"
-                      aria-haspopup="true"
-                      // onClick={handleMenu}
-                      > */}
-            {/* <Sidebar/> */}
-              {/* <MenuIcon></MenuIcon> */}
-          {/* </IconButton> */}
           <Sidebar loggedIn={loggedIn}/>
           <Typography variant="h6" className={classes.title}>
             <Link to="/" style={linkStyle}>FinStack</Link>
@@ -120,6 +119,7 @@ function Header({loggedIn, setLoggedIn}) {
               >
                 <MenuItem onClick={handleClose}>Profile</MenuItem>
                 <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={changePasswordClick}>ChangePassword</MenuItem>
               </Menu>
             </div>
           ) :

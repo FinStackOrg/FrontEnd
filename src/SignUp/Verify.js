@@ -25,13 +25,7 @@ const Verify = () => {
                 console.log(err.message)
                 return;
             } else {
-                console.log('call result: ' + result);
-                console.log("location state: " + location.state)
                 // authenticate user
-
-                console.log("Came to authenticate user")
-                console.log("Username: " + username);
-                console.log("Password: " + password);
                 var authenticationData = {
                     Username: username,
                     Password: password,

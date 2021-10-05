@@ -13,6 +13,7 @@ import Binance from './Accounts/Binance/Binance';
 import Coinbase from './Accounts/Coinbase/Coinbase';
 import CoinbaseLink from './Accounts/Coinbase/CoinbaseLink';
 import Webull from './Accounts/Webull/Webull';
+import ChangePassword from './Components/ChangePassword';
 
 
 export default () => {
@@ -22,6 +23,7 @@ export default () => {
         <Route path="/" exact={true} component={Home}/>
         <Route path="/SignUp" exact={true} component={SignUp}/>
         <Route path ="/Verify" exact={true} component={Verify}/>
+        <Route path="/ChangePassword" exact={true} component={ChangePassword}/>
         <Route path="/Login" exact={true} component={Login}/>
         <Route path="/Robinhood" exact={true} component={Robinhood}/>
         <Route path="/CoinbasePro" exact={true} component={CoinbasePro}/>

@@ -28,7 +28,6 @@ const RobinhoodSignup = () => {
     const onSubmit = event => {
         // call robinhood Login endpoint
         event.preventDefault();
-        console.log("Came here!!")
         var requestOptions = {
             method: 'POST',
             redirect: 'follow'
@@ -43,19 +42,16 @@ const RobinhoodSignup = () => {
             console.log("Code type was challenge code!")
             loginUrl = loginUrl + '&challenge_code=' + code
         }
-        console.log("Login url: " + loginUrl);
         fetch(loginUrl, requestOptions)
         .then(response => response.text())
         .then(data => {
             var jsonData = JSON.parse(data)
-            console.log("data: " + data)
             if ("type" in jsonData) {
                 console.log("code type: " + jsonData.type)
                 setAskCode(true);
                 setCodeType(jsonData.type)
             } else if ("loggedIn" in jsonData) {
                 console.log("Robinhood logged in")
-                console.log("Data: "+ jsonData.data)
                 history.push({
                     pathname: "/",
                 })
@@ -64,9 +60,6 @@ const RobinhoodSignup = () => {
         .catch(error => console.log('error', error))
     }
 
-    useEffect(() => {
-        console.log("Came to use Effect!")
-    }, [setAskCode, setCodeType])
 
     return (
         <ThemeProvider theme={theme}>

@@ -12,8 +12,6 @@ const TDLink = () => {
     const [code, setCode] = React.useState('');
     const [hasCode, setHasCode] = React.useState(false);
     let query = useQuery().toString();
-    console.log("Query: "+ query)
-    console.log("Type: " + typeof query)
     let history = useHistory();
     var user = UserPool.getCurrentUser();
     var userId = user.getUsername();
@@ -40,7 +38,6 @@ const TDLink = () => {
                 .then(data => {
                     var jsonData = JSON.parse(data)
                     console.log("Td ameritrade logged in")
-                    console.log("Logged in: "+ jsonData.loggedIn)
                     history.push({
                         pathname: "/"
                     })
