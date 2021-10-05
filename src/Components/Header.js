@@ -84,7 +84,7 @@ function Header({loggedIn, setLoggedIn}) {
             {/* <Sidebar/> */}
               {/* <MenuIcon></MenuIcon> */}
           {/* </IconButton> */}
-          <Sidebar/>
+          <Sidebar loggedIn={loggedIn}/>
           <Typography variant="h6" className={classes.title}>
             <Link to="/" style={linkStyle}>FinStack</Link>
           </Typography>

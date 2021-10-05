@@ -71,7 +71,7 @@ const gridStyles = makeStyles({
 });
 
 const links = {
-  'robinhood': "https://robinhood.com/",
+  'Robinhood': "https://robinhood.com/",
   'CoinbasePro': "https://pro.coinbase.com/portfolios"
 
 }

@@ -58,9 +58,6 @@ const RobinhoodSignup = () => {
                 console.log("Data: "+ jsonData.data)
                 history.push({
                     pathname: "/",
-                    // state: {
-                    //     newData: jsonData.data
-                    // }
                 })
             }
         })

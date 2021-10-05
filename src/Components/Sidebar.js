@@ -28,10 +28,11 @@ const useStyles = makeStyles({
 
 
 
-export default function Sidebar() {
+export default function Sidebar({loggedIn}) {
   const classes = useStyles();
   const [state, setState] = React.useState(false);
   let history = useHistory();
+  const [disabled, setDisabled] = React.useState(!loggedIn)
 
 
   const toggleDrawer = (openDrawer) => (event) => {
@@ -98,10 +99,15 @@ export default function Sidebar() {
     </div>
   );
 
+  // useCallback
+  React.useEffect(() => {
+    console.log("Came to useEffect")
+    setDisabled(!loggedIn)
+  }, [loggedIn])
   return (
     <div>
         <React.Fragment key={'left'}>
-          <Button style={{color:'white'}} onClick={toggleDrawer(true)}>
+          <Button disabled={disabled} style={{color:'white'}} onClick={toggleDrawer(true)}>
             <MenuIcon/>
           </Button>
           <Drawer anchor={'left'} open={state} onClose={toggleDrawer(false)}>
