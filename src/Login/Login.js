@@ -137,18 +137,18 @@ const Login = () => {
                               Sign In
                             </Button>
                             <Grid container columnSpacing={3} justify='space-between'>
-                              <Grid item>
+                              <Grid item xs={6} style={{textAlign: "center"}} >
                                 <Button
                                 variant="outlined" variant="contained" color="primary" size="small" onClick={forgotPassword}>
                                 Forgot Password
                                 </Button>
                               </Grid>
-                              <Grid item>
+                              <Grid item xs={6} style={{textAlign: "center"}} >
                                 {/* <Link href="#" variant="body2">
                                   {"Don't have an account? Sign Up"}
                                 </Link> */}
                                 <Button variant="outlined" color="primary" variant="contained" size="small" onClick={signUpClick}>
-                                Don't have an account? Sign Up
+                                No account? Sign Up
                                 </Button>
                               </Grid>
                             </Grid>
