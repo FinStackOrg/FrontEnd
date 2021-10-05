@@ -19,6 +19,9 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { AssessmentSharp } from '@material-ui/icons';
+import Grid from '@mui/material/Grid';
+import FormatNumber from '../Helper/FormatNumber'
+
 
 const useStyles = makeStyles({
   root: {
@@ -31,14 +34,29 @@ const useStyles = makeStyles({
   },
   title: {
     fontSize: 18,
+    textAlign: 'center'
+  },
+  accountTotal: {
+    textAlign: 'center'
+  },
+  change :{
+    textAlign: 'center'
   },
   neg: {
     marginBottom: 12,
     color: "#f44336",
+    textAlign: 'center',
   },
   pos: {
     marginBottom: 12,
     color: "#7cb342",
+    textAlign: 'center',
+  },
+  showType: {
+    textAlign: 'center',
+  },
+  buttons : {
+    textAlign: 'center',
   },
 });
 
@@ -48,6 +66,7 @@ const gridStyles = makeStyles({
       backgroundColor: 'rgba(224, 183, 60, 0.55)',
       color: '#1a3e72',
       fontWeight: '600',
+      textAlign: 'center'
     },
     '& .super-app.negative': {
       backgroundColor: 'rgba(157, 255, 118, 0.49)',
@@ -62,10 +81,12 @@ const gridStyles = makeStyles({
     '& .pos': {
       color: '#7cb342',
       fontSize: 15,
+      textAlign: 'center',
     },
     '& .neg': {
       color: '#f44336',
-      fontSize: 15
+      fontSize: 15,
+      textAlign: 'center',
     },
   },
 });
@@ -188,19 +209,23 @@ const links = {
 
   return (
     <Card className={classes.root}>
-
       <CardContent>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
           <Link to={{pathname: links[title]}} target="_blank" style={linkStyle}>{title}</Link>
         </Typography>
-        <Typography variant="h5" component="h2">
-          Total: {total}
+        <Typography className={classes.accountTotal} variant="h5" component="h2">
+          Total: <FormatNumber number={total}/>
         </Typography>
         <Typography className={pctChange.includes("-") ? classes.neg : classes.pos}>
          {changeLabel}: {pctChange}% {pctChange.includes("-")? <ArrowDownwardIcon /> : <ArrowUpwardIcon/>}
         </Typography>
-        <Button size="small" onClick={onClickShowButton}>Show {buttonType}
-        </Button>
+        <Typography className={classes.showType}>
+          <Button size="small" onClick={onClickShowButton}>
+            Show {buttonType}
+          </Button>
+        </Typography>
+        {/* <Button className={classes.showType} size="small" onClick={onClickShowButton}>Show {buttonType}
+        </Button> */}
         {assetClicked &&
             <div style={{ height: 250, width: '100%' }} className={gridStylesLayout.root}>
               {list(assets)}
@@ -209,10 +234,19 @@ const links = {
         }
       </CardContent>
       <CardActions>
-        {assetClicked ? (<Button size="small" onClick={onClickAssets} >Close Assets</Button>)
-          : <Button size="small" onClick={onClickAssets} >Show Assets</Button>
-        }
-        <AlertDialog title = {title} username={username} reload={reload} setReload={setReload}/>
+        <Box sx={{ flexGrow: 1 }}>
+          <Grid container spacing={2} justifyContent="center" alignItems="center">
+            <Grid item xs={6} className={classes.buttons}>
+              {assetClicked ? 
+                (<Button size="small" onClick={onClickAssets} >Close Assets</Button>)
+                : <Button size="small" onClick={onClickAssets} >Show Assets</Button>
+              }
+            </Grid>
+            <Grid item xs={6} className={classes.buttons}>
+              <AlertDialog title = {title} username={username} reload={reload} setReload={setReload}/>
+            </Grid>
+          </Grid>
+        </Box>
       </CardActions>
     </Card>
   );

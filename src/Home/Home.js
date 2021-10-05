@@ -10,6 +10,8 @@ import ListItem from '@material-ui/core/ListItem';
 import { LensTwoTone } from '@material-ui/icons';
 import { Typography } from '@material-ui/core';
 import TabCard from '../Components/TabCard';
+import Grid from '@mui/material/Grid';
+import FormatNumber from '../Helper/FormatNumber'
 
 const Home = () => {
 
@@ -72,21 +74,35 @@ const Home = () => {
 
     }, [loggedIn, setLoggedIn, reload]);
 
-    const accountTotal = (data) => (
-        // <List>
-        <Typography variant="h4" gutterBottom>
-        Account Total: {data['accountTotal'].toFixed(2)}
-        </Typography>
-    );
+    const accountTotal = (data) => {
+        return (
+            <Typography variant="h4" style={{textAlign: "center"}} gutterBottom>
+            {/* Account Total: {data['accountTotal'].toFixed(2)} */}
+            Account Total: <FormatNumber number={data["accountTotal"]} />
+            </Typography>
+            )
+    }
 
-    const list = (data) => (
+    const list = (data) => {
         // <List>
             // account is each item inside data
-            data.map((account) => (
-                <SimpleCard account={account} username={username} reload={reload} setReload={setReload}/>
-            ))
+            // var size = 6
+            // if (account.name == "CoinbasePro"){
+            //     size = 12
+            // }
+            return data.map((account) => {
+                var size = 6
+                if (account.name == "Binance") {
+                    size = 12
+                } else if (account.name.startsWith("Webull")){
+                    size = 4
+                }
+                return (<Grid item xs={size}>
+                        <SimpleCard account={account} username={username} reload={reload} setReload={setReload}/>
+                        </Grid>)
+            })
         
-    );
+    };
 
         
     return (
@@ -94,15 +110,18 @@ const Home = () => {
             <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
             {loggedIn ? (
                 <div>
-                    <Typography variant="h2" gutterBottom>
+                    <Typography variant="h2" style={{textAlign: "center"}} gutterBottom>
                         Hello {firstName}
                     </Typography>
 
                     { hasData && 
                     accountTotal(data[0])
                     }
-                    { hasData && 
-                    list(data.slice(1,data.length))
+                    { hasData && (
+                        <Grid container spacing={2}>
+                            {list(data.slice(1,data.length))}
+                        </Grid>
+                    )
                     }
 
                 </div>
