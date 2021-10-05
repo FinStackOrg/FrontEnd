@@ -127,7 +127,9 @@ const Home = () => {
                 </div>
                 )   :
                 <div>
-                    'Hello Please Log In or Sign Up'
+                    <Typography variant="h2" style={{textAlign: "center"}} gutterBottom>
+                        Hello Please Log In or Sign Up
+                    </Typography>
                 </div>
             }
         
