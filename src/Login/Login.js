@@ -61,6 +61,9 @@ const Login = () => {
       history.push("/SignUp")
     }
 
+    const forgotPassword = () => {
+      history.push("/ForgotPassword")
+    }
     return (
         <div>
             <Header/>
@@ -133,17 +136,18 @@ const Login = () => {
                             >
                               Sign In
                             </Button>
-                            <Grid container>
-                              {/* <Grid item xs>
-                                <Link href="#" variant="body2">
-                                  Forgot password?
-                                </Link>
-                              </Grid> */}
+                            <Grid container columnSpacing={3} justify='space-between'>
+                              <Grid item>
+                                <Button
+                                variant="outlined" variant="contained" color="primary" size="small" onClick={forgotPassword}>
+                                Forgot Password
+                                </Button>
+                              </Grid>
                               <Grid item>
                                 {/* <Link href="#" variant="body2">
                                   {"Don't have an account? Sign Up"}
                                 </Link> */}
-                                <Button size="small" onClick={signUpClick}>
+                                <Button variant="outlined" color="primary" variant="contained" size="small" onClick={signUpClick}>
                                 Don't have an account? Sign Up
                                 </Button>
                               </Grid>
