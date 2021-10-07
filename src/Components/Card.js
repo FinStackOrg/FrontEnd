@@ -177,7 +177,11 @@ const links = {
     useEffect(() => {
         setTitle(account.name)
         setTotal(account.account_total)
-        setPctChange(account.total_pct_change)
+        if (buttonType == "Daily") {
+            setPctChange(account.total_all_time_pct_change);
+        } else {
+            setPctChange(account.total_pct_change);
+        }
     })
 
   const getRows = (showAssets) => {
