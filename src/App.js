@@ -14,6 +14,7 @@ import CoinbaseLink from './Accounts/Coinbase/CoinbaseLink';
 import Webull from './Accounts/Webull/Webull';
 import ChangePassword from './Components/ChangePassword';
 import ForgotPassword from './Components/ForgotPassword';
+import Grid from './Components/TestGrid';
 
 
 export default () => {
@@ -34,6 +35,7 @@ export default () => {
         <Route path="/Coinbase" exact={true} component={Coinbase}/>
         <Route path="/coinbaseLink" exact={true} component={CoinbaseLink}/>
         <Route path="/Webull" exact={true} component={Webull}/>
+        <Route path="/Grid" exact={true} component={Grid}/>
       </BrowserRouter>
     </div>
   );

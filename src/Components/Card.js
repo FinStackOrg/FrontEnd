@@ -174,6 +174,12 @@ const links = {
     }
   }
 
+    useEffect(() => {
+        setTitle(account.name)
+        setTotal(account.account_total)
+        setPctChange(account.total_pct_change)
+    })
+
   const getRows = (showAssets) => {
     if (buttonType == "All Time"){
       return showAssets.map((asset, index) => (
@@ -181,7 +187,6 @@ const links = {
               Share_Quantity: asset[4], Share_Price: asset[5]}
             ))
     } else if (buttonType == "Daily") {
-      console.log("Came here???????")
       return showAssets.map((asset, index) => (
               {id: index, Ticker: asset[0], Name: asset[1], Change: asset[6], Value: asset[3], 
               Share_Quantity: asset[4], Share_Price: asset[5], Purchased_Price: asset[7]}
@@ -191,12 +196,9 @@ const links = {
 
   const list = (showAssets) => (
     <DataGrid
-      columns={
-        getColumns()
-      }
-      rows={
-        getRows(showAssets)
-      }
+      columns={getColumns()}
+      rows={getRows(showAssets)}
+      // style={{'height': '200px'}}
       // row wise classes
       // getRowClassName={(params) => 
       //   clsx({
