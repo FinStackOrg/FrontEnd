@@ -7,10 +7,8 @@ const Binance = () => {
 
     return (
         <div>
-            <p>Binance</p>
-            <Grid container justifyContent= "center">
-                <BinanceSignIn/>
-            </Grid>
+
+            <BinanceSignIn/>
         </div>
     )
 }

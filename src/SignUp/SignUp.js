@@ -29,6 +29,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Avatar from '@mui/material/Avatar';
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 var passwordValidator = require('password-validator');
@@ -40,6 +41,7 @@ const SignUp = () => {
     const [fName, setfName] = useState({Name: 'given_name', Value: ''});
     const [lName, setlName] = useState({Name: 'family_name', Value: ''});
     const [bday, setBday] = useState({Name: 'birthdate', Value: new Date()});
+    const [loading, setLoading] = useState(false);
     const handleDateChange = (date) => {
         var strDate = Moment(date).format('MM-DD-YYYY');
         console.log("Date: " + strDate)
@@ -72,18 +74,18 @@ const SignUp = () => {
         event.preventDefault();
 
         // if passwordChange();
-        console.log("Came to on submit???")
+        setLoading(true)
         UserPool.signUp(email, password, attributeList, null, (err, data) => {
         if (err) {
-            console.log("CAme to err!!!!!")
             console.log("Name + " + err.name)
+            setLoading(false)
             if (err.name == "UsernameExistsException") {
                 console.log("username already exists, Please login")
                 alert("username already exists, Please login")
             }
-            // console.error(err);
         } else {
-            console.log("Came to data??")
+            console.log("Next step verify")
+            setLoading(false)
             console.log(data);
             // redirect the user to verify page?
             history.push({
@@ -109,9 +111,7 @@ const SignUp = () => {
         }
       };
     return (
-        // <div>
-        //     <Header/>
-        // </div>
+        
         <ThemeProvider theme={theme}>
             <Header/>
             <Container component="main" maxWidth="xs">
@@ -221,13 +221,21 @@ const SignUp = () => {
                         fullWidth
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
+                        size="small"
                         >
-                        Sign Up
+                        {loading ? (
+                                <Box sx={{ display: 'flex' }} justifyContent="center">
+                                <CircularProgress />
+                                </Box>
+                            ) : [(
+                                <p>Sign Up</p>
+                            )]
+                        }
                         </Button>
                         <Grid container justifyContent="flex-end">
-                        <Grid item>
-                            <Button size="small" onClick={loginClick}>
-                            Already have an account? Log in
+                        <Grid item style={{textAlign: "center"}} sx={{ mt: 3}} xs={12}>
+                            <Button size="small" variant="contained" color="primary" onClick={loginClick}>
+                            Have an account? Log in
                             </Button>
                         </Grid>
                         </Grid>

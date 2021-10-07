@@ -7,10 +7,7 @@ const Coinbase = () => {
 
     return (
         <div>
-            <p>Coinbase Pro</p>
-            <Grid container justifyContent= "center">
-                <CoinbaseProSignup/>
-            </Grid>
+            <CoinbaseProSignup/>
         </div>
     )
 }

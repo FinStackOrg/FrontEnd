@@ -2,9 +2,10 @@ import React, { useEffect, useState} from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import {Link} from 'react-router-dom';
+import Header from '../../Components/Header';
 
 const CoinbaseSignIn = () => {
-
+    const [loggedIn, setLoggedIn] = useState(true);
     const linkStyle = {
         textDecoration: "none",
         color: "#78909c",
@@ -15,6 +16,7 @@ const CoinbaseSignIn = () => {
     + scopes;
     return (
         <div>
+            <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
             <Button
                 type="submit"
                 fullWidth

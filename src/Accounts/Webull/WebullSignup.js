@@ -11,6 +11,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import CssBaseline from '@mui/material/CssBaseline';
+import CircularProgress from '@mui/material/CircularProgress';
+import Header from '../../Components/Header';
 
 
 const theme = createTheme();
@@ -21,6 +23,8 @@ const WebullSignup = () => {
     const [code, setCode] = useState('');
     const [askCode, setAskCode] = useState(false);
     const [codeType, setCodeType] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [loggedIn, setLoggedIn] = useState(true);
     let history = useHistory();
 
     var user = UserPool.getCurrentUser();
@@ -29,6 +33,7 @@ const WebullSignup = () => {
     const onSubmit = event => {
         // call robinhood Login endpoint
         event.preventDefault();
+        setLoading(true);
         var requestOptions = {
             method: 'POST',
             redirect: 'follow'
@@ -39,18 +44,41 @@ const WebullSignup = () => {
         .then(response => response.text())
         .then(data => {
             var jsonData = JSON.parse(data)
-            console.log("Webull logged in")
-            history.push({
-                pathname: "/",
-            })
+            setLoading(false);
+            if ("loggedIn" in jsonData){
+                console.log("Webull logged in")
+                alert("Sucessfully linked!")
+                history.push({
+                    pathname: "/",
+                })
+            } else {
+                alert("Incorrect credentials, try again")
+                history.push({
+                    pathname: "/Webull",
+                })
+            }
+            
         })
-        .catch(error => console.log('error', error))
+        .catch(error => {
+            setLoading(false);
+            alert("Error when logging in, try again")
+            console.log('error', error)
+        })
     }
 
+
+    useEffect(() => {
+        if (user) {
+            setLoggedIn(true)
+        } else {
+            setLoggedIn(false)
+        }
+    })
 
 
     return (
         <ThemeProvider theme={theme}>
+            <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <Box
@@ -79,6 +107,7 @@ const WebullSignup = () => {
                             label="Email Address"
                             name="email"
                             autoComplete="email"
+                            variant="outlined"
                             autoFocus
                             value={username}
                             onChange={event => setUsername(event.target.value)}
@@ -92,6 +121,7 @@ const WebullSignup = () => {
                             type="password"
                             id="password"
                             autoComplete="current-password"
+                            variant="outlined"
                             value={password}
                             onChange={event => setPassword(event.target.value)}
                         />
@@ -114,8 +144,18 @@ const WebullSignup = () => {
                             variant="contained"
                             color="white"
                             sx={{ mt: 3, mb: 2 }}
+                            size="small"
                         >
-                            Sign In
+                            {loading ? (
+                                <Box sx={{ display: 'flex' }} justifyContent="center">
+                                <CircularProgress />
+                                </Box>
+                            ): [(
+                                <p>
+                                Sign In
+                                </p>
+                                )]
+}
                         </Button>
                     </Box>
                 </Box>

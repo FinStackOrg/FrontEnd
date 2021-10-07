@@ -16,17 +16,19 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Avatar from '@mui/material/Avatar';
-import Paper from "@material-ui/core/Paper"
+import Paper from "@material-ui/core/Paper";
+import CircularProgress from '@mui/material/CircularProgress';
 
 const theme = createTheme();
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false)
     let history = useHistory();
 
     const onSubmit = event => {
         event.preventDefault();
-    
+        setLoading(true)
         const user = new CognitoUser({
           Username: email,
           Pool: UserPool
@@ -38,20 +40,24 @@ const Login = () => {
         user.authenticateUser(authDetails, {
           onSuccess: data => {
             console.log("onSuccess:", data);
+            setLoading(false)
             history.push({
                 pathname: "/",
                 state : {
                     loggedIn : true
                 },
             });
+
           },
     
           onFailure: err => {
+            setLoading(false)
             console.error("onFailure:", err);
             alert("Incorrect username or password try again")
           },
 
           newPasswordRequired: data => {
+            setLoading(false)
             console.log("newPasswordRequired:", data);
           }
         });
@@ -66,8 +72,9 @@ const Login = () => {
     }
     return (
         <div>
-            <Header/>
+            
             <ThemeProvider theme={theme}>
+            <Header />
                 <Grid container component="main" sx={{ height: '100vh' }}>
                     <CssBaseline />
                     <Grid
@@ -133,17 +140,25 @@ const Login = () => {
                               fullWidth
                               variant="contained"
                               sx={{ mt: 3, mb: 2 }}
+                              size="small"
                             >
-                              Sign In
+                              {loading ? (
+                                <Box sx={{ display: 'flex' }} justifyContent="center">
+                                <CircularProgress />
+                                </Box>
+                              ) : [(
+                                    <p>Sign In</p>
+                                  )]
+                              }
                             </Button>
                             <Grid container columnSpacing={3} justify='space-between'>
-                              <Grid item xs={6} style={{textAlign: "center"}} >
+                              <Grid item xs={6} style={{textAlign: "center"}} sx={{ mt: 3}} >
                                 <Button
                                 variant="outlined" variant="contained" color="primary" size="small" onClick={forgotPassword}>
                                 Forgot Password
                                 </Button>
                               </Grid>
-                              <Grid item xs={6} style={{textAlign: "center"}} >
+                              <Grid item xs={6} style={{textAlign: "center"}} sx={{ mt: 3}} >
                                 {/* <Link href="#" variant="body2">
                                   {"Don't have an account? Sign Up"}
                                 </Link> */}

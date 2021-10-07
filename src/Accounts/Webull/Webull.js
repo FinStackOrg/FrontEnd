@@ -7,9 +7,7 @@ const Webull = () => {
 
     return (
         <div>
-            <Grid container justifyContent= "center">
-                <WebullSignup/>
-            </Grid>
+            <WebullSignup/>
         </div>
     )
 }

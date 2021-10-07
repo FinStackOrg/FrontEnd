@@ -14,6 +14,7 @@ import Container from '@mui/material/Container';
 import Button from '@material-ui/core/Button';
 import Avatar from '@mui/material/Avatar';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const theme = createTheme();
 
@@ -25,14 +26,17 @@ const Verify = () => {
     // get this from signup form
     const [username, setUsername] = useState(location.state.username)
     const [password, setPassword] = useState(location.state.password)
+    const [loading, setLoaidng] = useState(false)
     console.log("state: " + location.state)
     const [userData, setUserData] = useState({Username: location.state.username, Pool:UserPool})
     
     const onSubmit = event => {
         event.preventDefault();
+        setLoaidng(true)
         var cognitoUser = new CognitoUser(userData);
         cognitoUser.confirmRegistration(verifyCode, true, function(err, result){
             if (err) {
+                setLoaidng(false)
                 alert(err.message || JSON.stringify(err));
                 console.log(err.message)
             } else {
@@ -59,6 +63,7 @@ const Verify = () => {
                             .then(response => response.text())
                             .then(resultConfirmUser => console.log(resultConfirmUser))
                             .catch(error => console.log('error', error));
+                            setLoaidng(false)
                             history.push({
                                 pathname: "/",
                                 state : {
@@ -68,11 +73,13 @@ const Verify = () => {
                         },
                 
                         onFailure: err1 => {
+                            setLoaidng(false)
                             console.error('onFailure:', err1);
                             alert("Incorrect code try again")
                         },
                 
                         newPasswordRequired: data => {
+                            setLoaidng(false)
                             console.log('newPasswordRequired:', data);
                         }
                     }
@@ -100,6 +107,9 @@ const Verify = () => {
                 <Typography component="h1" variant="h5">
                 Verify Code
                 </Typography>
+                <Typography component="h2" variant="h5" style={{'textAlign': 'center'}}>
+                Enter verification code sent to your email
+                </Typography>
                 <Box component="form" onSubmit={onSubmit} sx={{ mt: 3 }}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
@@ -123,8 +133,16 @@ const Verify = () => {
                         variant="contained"
                         color="primary"
                         sx={{ mt: 3, mb: 2 }}
+                        size="small"
                         >
-                    Verify
+                    {loading ? (
+                            <Box sx={{ display: 'flex' }} justifyContent="center">
+                            <CircularProgress />
+                            </Box>
+                        ) : [(
+                            <p>Verify</p>
+                        )]
+                    }
                     </Button>
                 </Box>
             </Box>

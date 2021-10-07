@@ -7,9 +7,7 @@ const Robinhood = () => {
 
     return (
         <div>
-            <Grid container justifyContent= "center">
-                <RobinhoodSignup/>
-            </Grid>
+            <RobinhoodSignup/>
         </div>
     )
 }

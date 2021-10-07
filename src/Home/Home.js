@@ -12,6 +12,8 @@ import { Typography } from '@material-ui/core';
 import TabCard from '../Components/TabCard';
 import Grid from '@mui/material/Grid';
 import FormatNumber from '../Helper/FormatNumber'
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 const Home = () => {
 
@@ -21,6 +23,7 @@ const Home = () => {
     const [hasData, setHasData] = useState(false);
     const [firstName, setFirstName] = useState('');
     const [reload, setReload] = useState(false);
+    const [loading, setLoading] = useState(false);
     let history = useHistory();
     let location = useLocation();
 
@@ -32,6 +35,8 @@ const Home = () => {
                 if (err) {
                     console.error("Error when getting session for user")
                 } else {
+                    setLoading(true)
+                    setHasData(false)
                     console.log("Found User")
                     setLoggedIn(true);
                     var requestOptions = {
@@ -52,9 +57,11 @@ const Home = () => {
                     var username1 = user.getUsername()
                     setUsername(username1)
                     var homePageUrl = "https://ji1g9w5p36.execute-api.us-west-1.amazonaws.com/test/homePage/" + username1
+                    
                     fetch(homePageUrl, requestOptions)
                     .then(response => response.text())
                     .then(received_data => {
+                        setLoading(false)
                         console.log("Was able to reach home page endpoint")
                         var jsonData = JSON.parse(received_data)
                         console.log("Data from homepage: " + jsonData[0].accountTotal)
@@ -62,8 +69,12 @@ const Home = () => {
                         if (jsonData.length > 0) {
                             setHasData(true)
                         }
+                        
                     })
-                    .catch(err2 => console.log("Error: " , err2))
+                    .catch(err2 => {
+                        setLoading(false)
+                        console.log("Error: " , err2)
+                    })
                 }
             });
         } else {
@@ -108,30 +119,63 @@ const Home = () => {
     return (
         <div>
             <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
-            {loggedIn ? (
-                <div>
-                    <Typography variant="h2" style={{textAlign: "center"}} gutterBottom>
-                        Hello {firstName}
-                    </Typography>
+            {loading ? (
+                <Box sx={{ display: 'flex' }} justifyContent="center">
+                    <CircularProgress />
+                </Box>
+            ) :
+                [
+                    (loggedIn ? (
+                        <div>
+                            <Typography variant="h2" style={{textAlign: "center"}} gutterBottom>
+                                Hello {firstName}
+                            </Typography>
 
-                    { hasData && 
-                    accountTotal(data[0])
-                    }
-                    { hasData && (
-                        <Grid container spacing={2}>
-                            {list(data.slice(1,data.length))}
-                        </Grid>
+                            { hasData && 
+                            accountTotal(data[0])
+                            }
+                            { hasData && (
+                                <Grid container spacing={2}>
+                                    {list(data.slice(1,data.length))}
+                                </Grid>
+                            )
+                            }
+
+                        </div>
+                        )   :
+                        <div>
+                            <Typography variant="h2" style={{textAlign: "center"}} gutterBottom>
+                                Hello Please Log In or Sign Up
+                            </Typography>
+                        </div>
                     )
-                    }
-
-                </div>
-                )   :
-                <div>
-                    <Typography variant="h2" style={{textAlign: "center"}} gutterBottom>
-                        Hello Please Log In or Sign Up
-                    </Typography>
-                </div>
+                ]
+                    
             }
+                {/* {loggedIn ? (
+                    <div>
+                        <Typography variant="h2" style={{textAlign: "center"}} gutterBottom>
+                            Hello {firstName}
+                        </Typography>
+
+                        { hasData && 
+                        accountTotal(data[0])
+                        }
+                        { hasData && (
+                            <Grid container spacing={2}>
+                                {list(data.slice(1,data.length))}
+                            </Grid>
+                        )
+                        }
+
+                    </div>
+                    )   :
+                    <div>
+                        <Typography variant="h2" style={{textAlign: "center"}} gutterBottom>
+                            Hello Please Log In or Sign Up
+                        </Typography>
+                    </div>
+                } */}
         
         </div>
     );

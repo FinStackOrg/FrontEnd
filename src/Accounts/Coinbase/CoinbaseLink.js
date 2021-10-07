@@ -4,7 +4,10 @@ import {
     useParams,
     useLocation,
     useHistory
-  } from "react-router-dom";
+} from "react-router-dom";
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 function useQuery() {
@@ -14,6 +17,8 @@ function useQuery() {
 const CoinbaseLink = () => {
     const [code, setCode] = React.useState('');
     const [hasCode, setHasCode] = React.useState(false);
+    const [loading, setLoading] = React.useState(false);
+    const [sentCode, setSentCode] = React.useState(false);
     let query = useQuery().toString();
     let history = useHistory();
     var user = UserPool.getCurrentUser();
@@ -23,7 +28,9 @@ const CoinbaseLink = () => {
         
         let searchTerm = "="
         let exists = query.indexOf(searchTerm);
-        if (exists >= 0) {
+        if (exists >= 0 && !sentCode) {
+            setLoading(true)
+            setSentCode(true)
             let currentCode = query.slice(exists+1)
             console.log("Code: " + currentCode)
             setCode(currentCode)
@@ -41,19 +48,39 @@ const CoinbaseLink = () => {
             .then(response => response.text())
             .then(data => {
                 var jsonData = JSON.parse(data)
-                console.log("Data: "+ jsonData.data)
-                history.push({
-                    pathname: "/"
-                })
+                setLoading(false);
+                if ("loggedIn" in jsonData) {
+                    console.log("Coinbase linked")
+                    alert("Succesfully Linked!")
+                    history.push({
+                        pathname: "/"
+                    })
+                } else {
+                    alert("Unable to verify code try again")
+                    history.push("/Coinbase")
+                    console.log('Was unable to link coinbase account with error: ', jsonData)
+                }
             })
-            .catch(error => console.log('error', error))
+            .catch(error => {
+                setLoading(false);
+                alert("Unable to get account try again")
+                history.push("/Coinbase")
+                console.log('error', error)
+            })
             
         }
     }, [code])
 
     return (
         <div>
-            Hello Collecting your Coinbase Login
+            <Typography component="h1" variant="h5" style={{'textAlign' : 'center'}}>
+            Hello Collecting your Coinbase Account
+            </Typography>
+            {loading && (
+                <Box sx={{ display: 'flex' }} justifyContent="center">
+                <CircularProgress />
+                </Box>
+            )}
         </div>
     )
 
