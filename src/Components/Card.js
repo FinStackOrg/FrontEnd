@@ -20,7 +20,10 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { AssessmentSharp } from '@material-ui/icons';
 import Grid from '@mui/material/Grid';
-import FormatNumber from '../Helper/FormatNumber'
+import FormatNumber from '../Helper/FormatNumber';
+import LinkIcon from '@mui/icons-material/Link';
+import { TextField } from '@material-ui/core';
+import UserPool from '../UserPool';
 
 
 const useStyles = makeStyles({
@@ -97,7 +100,7 @@ const links = {
 
 }
 
-  export default function SimpleCard({account, username, reload, setReload}) {
+export default function SimpleCard({account, username, reload, setReload}) {
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
 
@@ -107,9 +110,14 @@ const links = {
   const [changeLabel, setChangeLabel] = useState('Daily Change')
   const [title, setTitle] = useState(account.name)
   const [total, setTotal] = useState(account.account_total)
+  const [newName, setNewName] = useState('')
   const [pctChange, setPctChange] = useState(account.total_pct_change)
   const [rendered, setRendered] = useState(false);
+  const [isNameFocused, setIsNamedFocused] = useState(false);
+  const [edit, setEdit] = useState(false);
   const assets = account.assets
+
+  const user = UserPool.getCurrentUser();
 
   const onClickAssets = () => {
     // set to clicked
@@ -134,6 +142,13 @@ const links = {
     textDecoration: "none",
     color: "#78909c",
     fontWeight: "500"
+  }
+
+  const linkStyle1 = {
+    textDecoration: "none",
+    color: "#78909c",
+    fontWeight: "500",
+    textAlign: "left"
   }
 
   const gridStylesLayout = gridStyles();
@@ -174,15 +189,7 @@ const links = {
     }
   }
 
-    useEffect(() => {
-        setTitle(account.name)
-        setTotal(account.account_total)
-        if (buttonType == "Daily") {
-            setPctChange(account.total_all_time_pct_change);
-        } else {
-            setPctChange(account.total_pct_change);
-        }
-    })
+
 
   const getRows = (showAssets) => {
     if (buttonType == "All Time"){
@@ -213,12 +220,120 @@ const links = {
     />
   )
 
+  const saveName = () => {
+    setIsNamedFocused(false)
+    //  hit lambda to change name
+    console.log("new Title: " + title)
+    var requestOptions = {
+      method: 'POST',
+      redirect: 'follow'
+    };
+
+
+    var editUrl = "https://ji1g9w5p36.execute-api.us-west-1.amazonaws.com/test/editname?"
+    var userId = "userId="+ user.getUsername();
+    var accountName = "&accountName=" + account.name;
+    var displayName = "&displayName=" + title;
+    editUrl = editUrl + userId + accountName + displayName
+    console.log("Hitting url: ", editUrl)
+    fetch(editUrl, requestOptions)
+    .then(response => response.text())
+    .then(received_data => {
+      setEdit(false)
+      console.log("Got back data: " + received_data)
+    })
+    .catch(error => {
+      setEdit(false)
+      alert("Unable to edit name try again")
+      console.log("Error while trying to edit name")
+    })
+    setEdit(false)
+    setReload(!reload)
+  }
+
+  useEffect(() => {
+    // if we are not editing then setTitle
+    console.log("came to use Effect")
+    if (!edit) {
+      setTitle(account.name)
+      if (account.displayName != undefined) {
+        console.log("Setting name: " + account.displayName)
+        setTitle(account.displayName)
+      } else {
+        console.log("Setting name: " + account.name)
+      }
+
+    }
+    setTotal(account.account_total)
+    if (buttonType == "Daily") {
+        setPctChange(account.total_all_time_pct_change);
+    } else {
+        setPctChange(account.total_pct_change);
+    }
+  })
+
+  useEffect(() => {
+    // if we are not editing then setTitle
+    console.log("came to use Title Effect")
+    if (!edit) {
+      setTitle(account.name)
+      if (account.displayName != undefined) {
+        console.log("Setting name: " + account.displayName)
+        setTitle(account.displayName)
+      } else {
+        console.log("Setting name: " + account.name)
+      }
+
+    }
+    setTotal(account.account_total)
+    if (buttonType == "Daily") {
+        setPctChange(account.total_all_time_pct_change);
+    } else {
+        setPctChange(account.total_pct_change);
+    }
+  }, [title])
+
+
   return (
     <Card className={classes.root}>
       <CardContent>
-        <Typography className={classes.title} color="textSecondary" gutterBottom>
-          <Link to={{pathname: links[title]}} target="_blank" style={linkStyle}>{title}</Link>
-        </Typography>
+        <Grid container spacing={2}>
+          <Grid item xs={6}>
+            {!isNameFocused ? (
+              <Typography className={classes.title} color="textSecondary" style={{textAlign: "right"}} 
+              onClick={() => {
+                setIsNamedFocused(true);
+              }}
+              gutterBottom>
+              {title}
+              </Typography>
+            ) : (
+              <TextField
+                autoFocus
+                value={title}
+                onChange={event => {
+                  setEdit(true)
+                  console.log("value + " + event.target.value)
+                  setTitle(event.target.value)
+                }}
+                onBlur={saveName}
+                style={{textAlign: "right"}}
+                onKeyPress={(event) => {
+                  if (event.key == "Enter") {
+                    saveName()
+                  } 
+                }}
+          
+              />
+            )
+            }
+          </Grid>
+          <Grid item xs={6}>
+            <Link to={{pathname: links[title]}} target="_blank" style={linkStyle1}>
+              <LinkIcon/>
+            </Link>
+          </Grid>
+        </Grid>
         <Typography className={classes.accountTotal} variant="h5" component="h2">
           Total: <FormatNumber number={total}/>
         </Typography>

@@ -90,7 +90,7 @@ const Home = () => {
 
                             setAccounts(slicedData)
                         } else {
-                            console.log("setting it back to normal")
+                            // console.log("setting it back to normal")
                             setAccounts(jsonData.slice(1, jsonData.length))
                         }
                        

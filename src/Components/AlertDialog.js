@@ -33,7 +33,7 @@ export default function AlertDialog ({title, username, reload, setReload}) {
       .then(data => {
           console.log("Was able to delete account")
           handleClose();
-          setReload(true);
+          setReload(!reload);
       })
       .catch(error => console.log('It errored when deleting account!', error))
   };
