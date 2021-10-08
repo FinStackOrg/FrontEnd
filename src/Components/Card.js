@@ -106,11 +106,11 @@ export default function SimpleCard({account, username, reload, setReload}) {
 
   const [assetClicked, setAssetClicked] = useState(false)
   const [tabValue, setTabValue] = useState('1');
-  const [buttonType, setButtonType] = useState('All Time')
-  const [changeLabel, setChangeLabel] = useState('Daily Change')
   const [title, setTitle] = useState(account.name)
   const [total, setTotal] = useState(account.account_total)
   const [newName, setNewName] = useState('')
+  const [dailyChange, setDailyChange] = useState(account.total_pct_change)
+  const [allTimeChange, setAllTimeChange] = useState(account.total_all_time_pct_change)
   const [pctChange, setPctChange] = useState(account.total_pct_change)
   const [rendered, setRendered] = useState(false);
   const [isNameFocused, setIsNamedFocused] = useState(false);
@@ -124,27 +124,7 @@ export default function SimpleCard({account, username, reload, setReload}) {
     setAssetClicked(!assetClicked)
   }
 
-  const onClickShowButton = () => {
-    if (buttonType == "Daily") {
-        // switch to show daily change now
-        setButtonType("All Time")
-        setChangeLabel("Daily Change")
-        setPctChange(account.total_pct_change)
-    } else if (buttonType == "All Time"){
-        // switch to Show all time list
-        setChangeLabel("All Time Change")
-        setButtonType("Daily")
-        setPctChange(account.total_all_time_pct_change)
-    }
-  }
-
   const linkStyle = {
-    textDecoration: "none",
-    color: "#78909c",
-    fontWeight: "500"
-  }
-
-  const linkStyle1 = {
     textDecoration: "none",
     color: "#78909c",
     fontWeight: "500",
@@ -153,56 +133,39 @@ export default function SimpleCard({account, username, reload, setReload}) {
 
   const gridStylesLayout = gridStyles();
   const getColumns = () => {
-    if (buttonType == "All Time"){
-        return [
-          {field: 'Ticker', width: 150}, 
-          {field: 'Name', width: 150}, 
-          {field: 'Change', headerName: changeLabel, width: 200, type: 'number',
-          // how you can style individual cell
-          cellClassName: (params) => 
-            clsx({
-              neg: params.value.startsWith("-"),
-              pos: !params.value.startsWith("-"),
-            })
-          }, 
-          {field: 'Value', headerName: 'Current Value', width: 200, type: 'number'}, 
-          {field: 'Share_Quantity', headerName: 'Quantity', width: 200, type: 'number'}, 
-          {field: 'Share_Price', headerName: 'Share Price', width: 200, type: 'number'}, 
-        ]
-    } else if (buttonType == "Daily") {
       return [
         {field: 'Ticker', width: 150}, 
         {field: 'Name', width: 150}, 
-        {field: 'Change', headerName: changeLabel, width: 200, type: 'number',
+        {field: 'Change', headerName: "Daily Change", width: 200, type: 'number',
         // how you can style individual cell
         cellClassName: (params) => 
           clsx({
             neg: params.value.startsWith("-"),
             pos: !params.value.startsWith("-"),
           })
-        }, 
+        },
+        {field: 'ATChange', headerName: "All Time Change", width: 200, type: 'number',
+        // how you can style individual cell
+        cellClassName: (params) => 
+          clsx({
+            neg: params.value.startsWith("-"),
+            pos: !params.value.startsWith("-"),
+          })
+        },
         {field: 'Value', headerName: 'Current Value', width: 200, type: 'number'}, 
         {field: 'Share_Quantity', headerName: 'Quantity', width: 200, type: 'number'}, 
         {field: 'Share_Price', headerName: 'Share Price', width: 200, type: 'number'}, 
         {field: 'Purchased_Price', headerName: 'Purchased Price', width: 200, type: 'number'}
       ]
-    }
   }
 
 
 
   const getRows = (showAssets) => {
-    if (buttonType == "All Time"){
-      return showAssets.map((asset, index) => (
-              {id: index, Ticker: asset[0], Name: asset[1], Change: asset[2], Value: asset[3], 
-              Share_Quantity: asset[4], Share_Price: asset[5]}
-            ))
-    } else if (buttonType == "Daily") {
-      return showAssets.map((asset, index) => (
-              {id: index, Ticker: asset[0], Name: asset[1], Change: asset[6], Value: asset[3], 
-              Share_Quantity: asset[4], Share_Price: asset[5], Purchased_Price: asset[7]}
-            ))
-    }
+    return showAssets.map((asset, index) => (
+      {id: index, Ticker: asset[0], Name: asset[1], Change: asset[2], ATChange: asset[6], Value: asset[3], 
+      Share_Quantity: asset[4], Share_Price: asset[5], Purchased_Price: asset[7]}
+    ))
   }
 
   const list = (showAssets) => (
@@ -253,7 +216,6 @@ export default function SimpleCard({account, username, reload, setReload}) {
 
   useEffect(() => {
     // if we are not editing then setTitle
-    console.log("came to use Effect")
     if (!edit) {
       setTitle(account.name)
       if (account.displayName != undefined) {
@@ -265,32 +227,25 @@ export default function SimpleCard({account, username, reload, setReload}) {
 
     }
     setTotal(account.account_total)
-    if (buttonType == "Daily") {
-        setPctChange(account.total_all_time_pct_change);
-    } else {
-        setPctChange(account.total_pct_change);
-    }
+    setDailyChange(account.total_pct_change)
+    setAllTimeChange(account.total_all_time_pct_change)
   })
 
   useEffect(() => {
     // if we are not editing then setTitle
-    console.log("came to use Title Effect")
     if (!edit) {
       setTitle(account.name)
       if (account.displayName != undefined) {
-        console.log("Setting name: " + account.displayName)
+        // console.log("Setting name: " + account.displayName)
         setTitle(account.displayName)
       } else {
-        console.log("Setting name: " + account.name)
+        // console.log("Setting name: " + account.name)
       }
 
     }
     setTotal(account.account_total)
-    if (buttonType == "Daily") {
-        setPctChange(account.total_all_time_pct_change);
-    } else {
-        setPctChange(account.total_pct_change);
-    }
+    setDailyChange(account.total_pct_change)
+    setAllTimeChange(account.total_all_time_pct_change)
   }, [title])
 
 
@@ -329,7 +284,7 @@ export default function SimpleCard({account, username, reload, setReload}) {
             }
           </Grid>
           <Grid item xs={6}>
-            <Link to={{pathname: links[title]}} target="_blank" style={linkStyle1}>
+            <Link to={{pathname: links[title]}} target="_blank" style={linkStyle}>
               <LinkIcon/>
             </Link>
           </Grid>
@@ -337,16 +292,12 @@ export default function SimpleCard({account, username, reload, setReload}) {
         <Typography className={classes.accountTotal} variant="h5" component="h2">
           Total: <FormatNumber number={total}/>
         </Typography>
-        <Typography className={pctChange.includes("-") ? classes.neg : classes.pos}>
-         {changeLabel}: {pctChange}% {pctChange.includes("-")? <ArrowDownwardIcon /> : <ArrowUpwardIcon/>}
+        <Typography className={dailyChange.includes("-") ? classes.neg : classes.pos}>
+         Daily Change: {dailyChange}% {dailyChange.includes("-")? <ArrowDownwardIcon /> : <ArrowUpwardIcon/>}
         </Typography>
-        <Typography className={classes.showType}>
-          <Button size="small" onClick={onClickShowButton}>
-            Show {buttonType}
-          </Button>
+        <Typography className={allTimeChange.includes("-") ? classes.neg : classes.pos}>
+         All Time Change: {allTimeChange}% {allTimeChange.includes("-")? <ArrowDownwardIcon /> : <ArrowUpwardIcon/>}
         </Typography>
-        {/* <Button className={classes.showType} size="small" onClick={onClickShowButton}>Show {buttonType}
-        </Button> */}
         {assetClicked &&
             <div style={{ height: 250, width: '100%' }} className={gridStylesLayout.root}>
               {list(assets)}
