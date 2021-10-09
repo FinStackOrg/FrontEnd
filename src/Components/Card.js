@@ -250,7 +250,7 @@ export default function SimpleCard({account, username, reload, setReload}) {
 
 
   return (
-    <Card className={classes.root}>
+    <Card sx={{ display: 'flex' }}>
       <CardContent>
         <Grid container spacing={2}>
           <Grid item xs={6}>
